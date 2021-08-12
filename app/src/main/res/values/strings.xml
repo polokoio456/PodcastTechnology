@@ -1,0 +1,8 @@
+<resources>
+    <string name="app_name">PodcastTechnology</string>
+    <string name="loading">Loading…</string>
+    <string name="no_data">查無資料</string>
+    <string name="server_error">伺服器錯誤</string>
+    <string name="retry">重試</string>
+    <string name="cancel">取消</string>
+</resources>
