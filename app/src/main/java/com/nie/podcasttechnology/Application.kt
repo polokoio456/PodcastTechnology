@@ -1,10 +1,7 @@
 package com.nie.podcasttechnology
 
 import android.app.Application
-import com.nie.podcasttechnology.module.adapterModule
-import com.nie.podcasttechnology.module.remoteModule
-import com.nie.podcasttechnology.module.repositoryModule
-import com.nie.podcasttechnology.module.viewModelModule
+import com.nie.podcasttechnology.module.*
 import org.koin.android.ext.koin.androidContext
 import org.koin.core.context.startKoin
 
@@ -20,7 +17,8 @@ class Application : Application() {
                     adapterModule,
                     viewModelModule,
                     repositoryModule,
-                    remoteModule
+                    remoteModule,
+                    utilModule
                 )
             )
         }

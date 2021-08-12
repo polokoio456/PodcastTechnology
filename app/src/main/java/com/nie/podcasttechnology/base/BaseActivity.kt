@@ -6,10 +6,13 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import androidx.appcompat.app.AppCompatActivity
 import com.nie.podcasttechnology.R
+import io.reactivex.disposables.CompositeDisposable
 
 abstract class BaseActivity : AppCompatActivity() {
 
     protected abstract val viewModel: BaseViewModel?
+
+    protected val compositeDisposable = CompositeDisposable()
 
     private lateinit var loadingDialog: Dialog
 
@@ -22,6 +25,11 @@ abstract class BaseActivity : AppCompatActivity() {
             .create()
 
         observableLiveData()
+    }
+
+    override fun onDestroy() {
+        compositeDisposable.clear()
+        super.onDestroy()
     }
 
     private fun observableLiveData() {
