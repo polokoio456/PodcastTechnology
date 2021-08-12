@@ -18,6 +18,8 @@ class MainViewModel(private val repository: MainRepository) : BaseViewModel() {
     fun fetchPodcasts() {
         repository.fetchPodcasts()
             .observeOn(AndroidSchedulers.mainThread())
+            .doOnSubscribe { showLoading() }
+            .doFinally { hideLoading() }
             .subscribe({
                 _rss.value = it
             }, {

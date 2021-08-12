@@ -1,6 +1,7 @@
 package com.nie.podcasttechnology
 
 import android.app.Application
+import com.nie.podcasttechnology.module.adapterModule
 import com.nie.podcasttechnology.module.remoteModule
 import com.nie.podcasttechnology.module.repositoryModule
 import com.nie.podcasttechnology.module.viewModelModule
@@ -16,6 +17,7 @@ class Application : Application() {
             androidContext(this@Application)
             modules(
                 listOf(
+                    adapterModule,
                     viewModelModule,
                     repositoryModule,
                     remoteModule

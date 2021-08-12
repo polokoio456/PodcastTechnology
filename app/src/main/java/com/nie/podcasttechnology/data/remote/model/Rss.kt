@@ -1,9 +1,11 @@
 package com.nie.podcasttechnology.data.remote.model
 
+import android.os.Parcelable
 import org.simpleframework.xml.Attribute
 import org.simpleframework.xml.Element
 import org.simpleframework.xml.ElementList
 import org.simpleframework.xml.Root
+import java.io.Serializable
 
 @Root(name = "rss", strict = false)
 data class Rss(
@@ -28,11 +30,11 @@ data class Channel(
     val image: List<Image>,
     @field:ElementList(entry = "item", inline = true, required = false)
     @param:ElementList(entry = "item", inline = true, required = false)
-    val items: List<Item>
+    val items: List<PodcastItem>
 )
 
 @Root(name = "item", strict = false)
-data class Item(
+data class PodcastItem(
     @field:Element(name = "title", required = false)
     @param:Element(name = "title", required = false)
     val title: String,
@@ -51,7 +53,7 @@ data class Item(
     @field:Element(name = "image", required = false)
     @param:Element(name = "image", required = false)
     val image: Image
-)
+) : Serializable
 
 @Root(name = "enclosure", strict = false)
 data class Enclosure(
@@ -61,7 +63,7 @@ data class Enclosure(
     @field:Attribute(name = "url", required = false)
     @param:Attribute(name = "url", required = false)
     val audioUrl: String
-)
+) : Serializable
 
 @Root(name = "image", strict = false)
 data class Image(
@@ -74,4 +76,4 @@ data class Image(
     @field:Element(name = "link", required = false)
     @param:Element(name = "link", required = false)
     val link: String?
-)
+) : Serializable
