@@ -14,11 +14,11 @@ import com.nie.podcasttechnology.bean.AudioPlayerState
 import com.nie.podcasttechnology.data.remote.model.PodcastItem
 import com.nie.podcasttechnology.databinding.ActivityAudioPlayBinding
 import com.nie.podcasttechnology.extension.throttleClick
+import com.nie.podcasttechnology.extension.toFormatTimeStr
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.rxkotlin.addTo
 import org.koin.android.ext.android.inject
 import org.koin.androidx.viewmodel.ext.android.viewModel
-
 
 class AudioPlayActivity : BaseActivity() {
 
@@ -113,11 +113,11 @@ class AudioPlayActivity : BaseActivity() {
     }
 
     private fun setMaxDurationText(maxDuration: Int) {
-        binding.textMaxDuration.text = viewModel.getFormatTimeStr(maxDuration)
+        binding.textMaxDuration.text = maxDuration.toFormatTimeStr()
     }
 
     private fun setCurrentDurationText(currentPosition: Int) {
-        val str = "${viewModel.getFormatTimeStr(currentPosition)} / "
+        val str = "${currentPosition.toFormatTimeStr()} / "
         binding.textCurrentDuration.text = str
     }
 
