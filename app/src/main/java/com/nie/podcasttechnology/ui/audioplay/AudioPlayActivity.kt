@@ -165,14 +165,12 @@ class AudioPlayActivity : BaseActivity() {
             }.addTo(compositeDisposable)
 
         RxView.clicks(binding.imageForward)
-            .throttleClick()
             .observeOn(AndroidSchedulers.mainThread())
             .subscribe {
                 audioPlayer.forward()
             }.addTo(compositeDisposable)
 
         RxView.clicks(binding.imageRewind)
-            .throttleClick()
             .observeOn(AndroidSchedulers.mainThread())
             .subscribe {
                 audioPlayer.rewind()
