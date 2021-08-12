@@ -7,6 +7,7 @@ import com.bumptech.glide.Glide
 import com.jakewharton.rxbinding2.view.RxView
 import com.nie.podcasttechnology.R
 import com.nie.podcasttechnology.base.BaseActivity
+import com.nie.podcasttechnology.data.database.model.EntityPodcast
 import com.nie.podcasttechnology.data.remote.model.PodcastItem
 import com.nie.podcasttechnology.databinding.ActivityPodcastDetailBinding
 import com.nie.podcasttechnology.extension.throttleClick
@@ -20,7 +21,7 @@ class PodcastDetailActivity : BaseActivity() {
     companion object {
         private const val KEY_PODCAST_ITEM = "key_podcast_item"
 
-        fun start(activity: Activity, item: PodcastItem) {
+        fun start(activity: Activity, item: EntityPodcast) {
             Intent(activity, PodcastDetailActivity::class.java).apply {
                 putExtra(KEY_PODCAST_ITEM, item)
             }.let { activity.startActivity(it) }
@@ -31,7 +32,7 @@ class PodcastDetailActivity : BaseActivity() {
 
     override val viewModel by viewModel<PodcastDetailViewModel>()
 
-    private val podcastItem by lazy { intent.getSerializableExtra(KEY_PODCAST_ITEM) as PodcastItem }
+    private val podcastItem by lazy { intent.getSerializableExtra(KEY_PODCAST_ITEM) as EntityPodcast }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -43,7 +44,7 @@ class PodcastDetailActivity : BaseActivity() {
 
     private fun initView() {
         Glide.with(this)
-            .load(podcastItem.image.imageUrl)
+            .load(podcastItem.imageUrl)
             .placeholder(R.drawable.place_holder_grey)
             .into(binding.imagePodcastCover)
 

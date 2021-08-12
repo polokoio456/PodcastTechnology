@@ -18,7 +18,8 @@ class Application : Application() {
                     viewModelModule,
                     repositoryModule,
                     remoteModule,
-                    utilModule
+                    utilModule,
+                    databaseModule
                 )
             )
         }

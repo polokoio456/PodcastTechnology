@@ -22,6 +22,7 @@ class MainActivity : BaseActivity() {
         super.onCreate(savedInstanceState)
         setContentView(binding.root)
 
+        viewModel.listenPodcast()
         viewModel.fetchPodcasts()
 
         initView()
@@ -47,13 +48,15 @@ class MainActivity : BaseActivity() {
     }
 
     private fun observableLiveData() {
-        viewModel.rss.observe(this, {
+        viewModel.coverImageUrl.observe(this, {
             Glide.with(this)
-                .load(it.channel.image[0].imageUrl)
+                .load(it)
                 .placeholder(R.drawable.place_holder_grey)
                 .into(binding.imagePodcastCover)
+        })
 
-            adapter.addAll(it.channel.items)
+        viewModel.podcasts.observe(this, {
+            adapter.addAll(it)
         })
     }
 }

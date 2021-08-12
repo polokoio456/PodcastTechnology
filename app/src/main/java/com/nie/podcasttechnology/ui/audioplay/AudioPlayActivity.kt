@@ -11,6 +11,7 @@ import com.nie.podcasttechnology.R
 import com.nie.podcasttechnology.base.BaseActivity
 import com.nie.podcasttechnology.bean.AudioPlayer
 import com.nie.podcasttechnology.bean.AudioPlayerState
+import com.nie.podcasttechnology.data.database.model.EntityPodcast
 import com.nie.podcasttechnology.data.remote.model.PodcastItem
 import com.nie.podcasttechnology.databinding.ActivityAudioPlayBinding
 import com.nie.podcasttechnology.extension.throttleClick
@@ -25,7 +26,7 @@ class AudioPlayActivity : BaseActivity() {
     companion object {
         private const val KEY_PODCAST_ITEM = "key_podcast_item"
 
-        fun start(activity: Activity, item: PodcastItem) {
+        fun start(activity: Activity, item: EntityPodcast) {
             Intent(activity, AudioPlayActivity::class.java).apply {
                 putExtra(KEY_PODCAST_ITEM, item)
             }.let { activity.startActivity(it) }
@@ -36,7 +37,7 @@ class AudioPlayActivity : BaseActivity() {
 
     override val viewModel by viewModel<AudioPlayViewModel>()
 
-    private val podcastItem by lazy { intent.getSerializableExtra(KEY_PODCAST_ITEM) as PodcastItem }
+    private val podcastItem by lazy { intent.getSerializableExtra(KEY_PODCAST_ITEM) as EntityPodcast }
 
     private val audioPlayer by inject<AudioPlayer>()
 
@@ -61,7 +62,7 @@ class AudioPlayActivity : BaseActivity() {
 
     private fun initView() {
         Glide.with(this)
-            .load(podcastItem.image.imageUrl)
+            .load(podcastItem.imageUrl)
             .placeholder(R.drawable.place_holder_grey)
             .into(binding.imagePodcastCover)
 
@@ -69,7 +70,7 @@ class AudioPlayActivity : BaseActivity() {
     }
 
     private fun initAudioPlayer() {
-        audioPlayer.resetPlayer(this, podcastItem.enclosure.audioUrl)
+        audioPlayer.resetPlayer(this, podcastItem.audioUrl)
 
         audioPlayer.getPlayerStateListener()
             .observeOn(AndroidSchedulers.mainThread())
