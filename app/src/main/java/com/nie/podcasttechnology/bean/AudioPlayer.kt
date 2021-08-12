@@ -49,22 +49,24 @@ class AudioPlayer : LifecycleObserver {
 
         player!!.start()
 
-        if (player!!.duration > 0) {
-            Flowable.interval(500, TimeUnit.MILLISECONDS)
-                .observeOn(Schedulers.io())
-                .subscribe({
-                    player?.currentPosition?.let {
-                        playerSubject.onNext(AudioPlayerState.Playing(it))
-
-                        if (it + 10 >= player!!.duration) {
-                            playerSubject.onNext(AudioPlayerState.Finished)
-                            releasePlayer()
-                        }
-                    }
-                }, {
-                    it.printStackTrace()
-                }).addTo(compositeDisposable)
+        if (player!!.duration <= 0) {
+            return
         }
+
+        Flowable.interval(500, TimeUnit.MILLISECONDS)
+            .observeOn(Schedulers.io())
+            .subscribe({
+                player?.currentPosition?.let {
+                    playerSubject.onNext(AudioPlayerState.Playing(it))
+
+                    if (it + 10 >= player!!.duration) {
+                        playerSubject.onNext(AudioPlayerState.Finished)
+                        releasePlayer()
+                    }
+                }
+            }, {
+                it.printStackTrace()
+            }).addTo(compositeDisposable)
     }
 
     @OnLifecycleEvent(Lifecycle.Event.ON_STOP)
@@ -134,7 +136,6 @@ class AudioPlayer : LifecycleObserver {
     fun getPlayerBufferProgressListener(): Flowable<Int> = playerBufferingLevelSubject.toFlowable(BackpressureStrategy.BUFFER)
 
     private fun releasePlayer() {
-        Log.d(Constant.TAG, "releasePlayer...")
         player?.stop()
         player?.reset()
         player?.release()
