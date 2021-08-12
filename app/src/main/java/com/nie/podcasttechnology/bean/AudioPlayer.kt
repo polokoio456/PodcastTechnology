@@ -15,7 +15,6 @@ import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.rxkotlin.addTo
 import io.reactivex.schedulers.Schedulers
 import io.reactivex.subjects.PublishSubject
-import java.lang.Exception
 import java.util.concurrent.TimeUnit
 
 class AudioPlayer : LifecycleObserver {
