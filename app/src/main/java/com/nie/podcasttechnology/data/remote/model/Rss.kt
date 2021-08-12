@@ -1,5 +1,6 @@
 package com.nie.podcasttechnology.data.remote.model
 
+import android.os.Parcelable
 import org.simpleframework.xml.Attribute
 import org.simpleframework.xml.Element
 import org.simpleframework.xml.ElementList

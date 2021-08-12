@@ -15,9 +15,15 @@ import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.rxkotlin.addTo
 import io.reactivex.schedulers.Schedulers
 import io.reactivex.subjects.PublishSubject
+import java.lang.Exception
 import java.util.concurrent.TimeUnit
 
 class AudioPlayer : LifecycleObserver {
+
+    companion object {
+        private const val INTERVAL_DURATION = 30_000
+    }
+
     private val playerSubject by lazy { PublishSubject.create<AudioPlayerState>() }
     private val playerBufferingLevelSubject by lazy { PublishSubject.create<Int>() }
 
@@ -63,6 +69,7 @@ class AudioPlayer : LifecycleObserver {
 
     @OnLifecycleEvent(Lifecycle.Event.ON_STOP)
     fun pauseAudio() {
+        playerSubject.onNext(AudioPlayerState.Paused)
         compositeDisposable.clear()
         player?.pause()
     }
@@ -115,6 +122,14 @@ class AudioPlayer : LifecycleObserver {
         player?.seekTo(progress)
     }
 
+    fun forward() {
+        player?.seekTo(player!!.currentPosition + INTERVAL_DURATION)
+    }
+
+    fun rewind() {
+        player?.seekTo(player!!.currentPosition - INTERVAL_DURATION)
+    }
+
     fun getPlayerStateListener(): Flowable<AudioPlayerState> = playerSubject.toFlowable(BackpressureStrategy.BUFFER)
     fun getPlayerBufferProgressListener(): Flowable<Int> = playerBufferingLevelSubject.toFlowable(BackpressureStrategy.BUFFER)
 
@@ -130,5 +145,6 @@ class AudioPlayer : LifecycleObserver {
 sealed class AudioPlayerState {
     data class Prepare(val maxDuration: Int) : AudioPlayerState()
     data class Playing(val position: Int) : AudioPlayerState()
+    object Paused : AudioPlayerState()
     object Finished : AudioPlayerState()
 }
