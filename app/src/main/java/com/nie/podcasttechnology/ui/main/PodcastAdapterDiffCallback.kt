@@ -9,7 +9,7 @@ class PodcastAdapterDiffCallback(
     private val newList: List<EntityPodcast>
 ) : DiffUtil.Callback() {
     override fun areItemsTheSame(oldItemPosition: Int, newItemPosition: Int): Boolean {
-        return oldList[oldItemPosition].title == newList[newItemPosition].title
+        return oldList[oldItemPosition].pubDate.time == newList[newItemPosition].pubDate.time
     }
 
     override fun getOldListSize() = oldList.size
@@ -17,6 +17,6 @@ class PodcastAdapterDiffCallback(
     override fun getNewListSize() = newList.size
 
     override fun areContentsTheSame(oldItemPosition: Int, newItemPosition: Int): Boolean {
-        return oldList[oldItemPosition].title == newList[newItemPosition].title
+        return oldList[oldItemPosition].pubDate.time == newList[newItemPosition].pubDate.time
     }
 }
