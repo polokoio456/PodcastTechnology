@@ -113,20 +113,12 @@ class AudioPlayActivity : BaseActivity() {
     }
 
     private fun setMaxDurationText(maxDuration: Int) {
-        binding.textMaxDuration.text = getFormatTimeStr(maxDuration)
+        binding.textMaxDuration.text = viewModel.getFormatTimeStr(maxDuration)
     }
 
     private fun setCurrentDurationText(currentPosition: Int) {
-        val str = "${getFormatTimeStr(currentPosition)} / "
+        val str = "${viewModel.getFormatTimeStr(currentPosition)} / "
         binding.textCurrentDuration.text = str
-    }
-
-    private fun getFormatTimeStr(maxDuration: Int): String {
-        val hours = maxDuration / 3600
-        val minutes = (maxDuration % 3600) / 60
-        val seconds = maxDuration % 60
-
-        return String.format("%02d:%02d:%02d", hours, minutes, seconds)
     }
 
     private fun initSeekBarMax(duration: Int) {
