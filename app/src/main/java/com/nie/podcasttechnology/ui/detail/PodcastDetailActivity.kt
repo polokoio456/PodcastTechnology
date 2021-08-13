@@ -7,6 +7,7 @@ import com.bumptech.glide.Glide
 import com.jakewharton.rxbinding2.view.RxView
 import com.nie.podcasttechnology.R
 import com.nie.podcasttechnology.base.BaseActivity
+import com.nie.podcasttechnology.base.BaseViewModel
 import com.nie.podcasttechnology.data.database.model.EntityPodcast
 import com.nie.podcasttechnology.databinding.ActivityPodcastDetailBinding
 import com.nie.podcasttechnology.extension.throttleClick
@@ -29,7 +30,7 @@ class PodcastDetailActivity : BaseActivity() {
 
     private val binding by lazy { ActivityPodcastDetailBinding.inflate(layoutInflater) }
 
-    override val viewModel by viewModel<PodcastDetailViewModel>()
+    override val viewModel: BaseViewModel? = null
 
     private val podcastItem by lazy { intent.getSerializableExtra(KEY_PODCAST_ITEM) as EntityPodcast }
 
