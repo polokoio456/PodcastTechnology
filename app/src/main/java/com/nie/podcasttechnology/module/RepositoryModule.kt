@@ -1,7 +1,7 @@
 package com.nie.podcasttechnology.module
 
-import com.nie.podcasttechnology.data.remote.model.Api
-import com.nie.podcasttechnology.data.remote.model.NetworkService
+import com.nie.podcasttechnology.data.remote.Api
+import com.nie.podcasttechnology.data.remote.NetworkService
 import com.nie.podcasttechnology.repository.DatabaseRepository
 import com.nie.podcasttechnology.repository.DatabaseRepositoryImpl
 import com.nie.podcasttechnology.repository.PodcastListRepository
