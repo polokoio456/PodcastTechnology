@@ -6,5 +6,5 @@ import org.koin.dsl.module
 
 val databaseModule = module {
     single { PodcastTechnologyDatabase.getInstance(androidApplication()) }
-    single { get<PodcastTechnologyDatabase>().podcastDao() }
+    single { get<PodcastTechnologyDatabase>().episodeDao() }
 }

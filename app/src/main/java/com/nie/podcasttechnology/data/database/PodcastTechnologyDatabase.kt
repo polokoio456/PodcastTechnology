@@ -20,7 +20,7 @@ import com.nie.podcasttechnology.data.database.model.EntityEpisode
     DateTypeConverter::class
 )
 abstract class PodcastTechnologyDatabase : RoomDatabase() {
-    abstract fun podcastDao(): EpisodeDao
+    abstract fun episodeDao(): EpisodeDao
 
     companion object {
         @Volatile
