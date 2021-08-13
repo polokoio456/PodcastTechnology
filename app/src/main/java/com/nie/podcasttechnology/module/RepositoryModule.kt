@@ -10,5 +10,5 @@ import org.koin.dsl.module
 
 val repositoryModule = module {
     single<MainRepository> { MainRepositoryImpl(NetworkService().create(Api::class.java)) }
-    single<DatabaseRepository> { DatabaseRepositoryImpl(get()) }
+    single<DatabaseRepository> { DatabaseRepositoryImpl(get(), get()) }
 }

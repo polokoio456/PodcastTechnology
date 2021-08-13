@@ -23,7 +23,8 @@ class MainViewModel(
     val coverImageUrl: LiveData<String> = _coverImageUrl
 
     fun fetchPodcasts() {
-        mainRepository.fetchPodcasts()
+        databaseRepository.clearAllDatabaseTables()
+            .flatMap { mainRepository.fetchPodcasts() }
             .doOnSuccess {
                 _coverImageUrl.postValue(it.channel.image[0].imageUrl)
             }

@@ -8,7 +8,6 @@ import com.jakewharton.rxbinding2.view.RxView
 import com.nie.podcasttechnology.R
 import com.nie.podcasttechnology.base.BaseActivity
 import com.nie.podcasttechnology.data.database.model.EntityPodcast
-import com.nie.podcasttechnology.data.remote.model.PodcastItem
 import com.nie.podcasttechnology.databinding.ActivityPodcastDetailBinding
 import com.nie.podcasttechnology.extension.throttleClick
 import com.nie.podcasttechnology.ui.audioplay.AudioPlayActivity

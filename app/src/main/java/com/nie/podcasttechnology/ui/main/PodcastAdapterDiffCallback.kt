@@ -2,7 +2,6 @@ package com.nie.podcasttechnology.ui.main
 
 import androidx.recyclerview.widget.DiffUtil
 import com.nie.podcasttechnology.data.database.model.EntityPodcast
-import com.nie.podcasttechnology.data.remote.model.PodcastItem
 
 class PodcastAdapterDiffCallback(
     private val oldList: List<EntityPodcast>,

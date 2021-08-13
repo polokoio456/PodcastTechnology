@@ -15,7 +15,7 @@ import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.rxkotlin.addTo
 import io.reactivex.schedulers.Schedulers
 import io.reactivex.subjects.PublishSubject
-import java.lang.Exception
+import java.util.*
 import java.util.concurrent.TimeUnit
 
 class AudioPlayer : LifecycleObserver {
@@ -32,6 +32,7 @@ class AudioPlayer : LifecycleObserver {
     private var player: MediaPlayer? = null
 
     private var isPrepared = false
+    private var currentPubData = Date()
 
     @OnLifecycleEvent(Lifecycle.Event.ON_START)
     fun startAudio() {
@@ -60,8 +61,7 @@ class AudioPlayer : LifecycleObserver {
                     playerSubject.onNext(AudioPlayerState.Playing(it))
 
                     if (it + 10 >= player!!.duration) {
-                        playerSubject.onNext(AudioPlayerState.Finished)
-                        releasePlayer()
+                        playerSubject.onNext(AudioPlayerState.Finished(currentPubData))
                     }
                 }
             }, {
@@ -82,7 +82,11 @@ class AudioPlayer : LifecycleObserver {
         releasePlayer()
     }
 
-    fun resetPlayer(context: Context, url: String) {
+    fun resetPlayer(context: Context, pubDate: Date, url: String) {
+        compositeDisposable.clear()
+
+        currentPubData = pubDate
+
         player = MediaPlayer()
 
         player!!.setAudioAttributes(
@@ -147,5 +151,5 @@ sealed class AudioPlayerState {
     data class Prepare(val maxDuration: Int) : AudioPlayerState()
     data class Playing(val position: Int) : AudioPlayerState()
     object Paused : AudioPlayerState()
-    object Finished : AudioPlayerState()
+    data class Finished(val currentPubDate: Date) : AudioPlayerState()
 }

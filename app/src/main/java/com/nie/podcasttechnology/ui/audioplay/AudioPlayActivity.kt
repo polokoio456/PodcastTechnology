@@ -3,6 +3,7 @@ package com.nie.podcasttechnology.ui.audioplay
 import android.app.Activity
 import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import android.widget.SeekBar
 import androidx.core.content.ContextCompat
 import com.bumptech.glide.Glide
@@ -12,10 +13,10 @@ import com.nie.podcasttechnology.base.BaseActivity
 import com.nie.podcasttechnology.bean.AudioPlayer
 import com.nie.podcasttechnology.bean.AudioPlayerState
 import com.nie.podcasttechnology.data.database.model.EntityPodcast
-import com.nie.podcasttechnology.data.remote.model.PodcastItem
 import com.nie.podcasttechnology.databinding.ActivityAudioPlayBinding
 import com.nie.podcasttechnology.extension.throttleClick
 import com.nie.podcasttechnology.extension.toFormatTimeStr
+import com.nie.podcasttechnology.util.Constant
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.rxkotlin.addTo
 import org.koin.android.ext.android.inject
@@ -53,6 +54,7 @@ class AudioPlayActivity : BaseActivity() {
         initAudioPlayer()
         initSeekBarListener()
         setOnClickListener()
+        observableLiveData()
     }
 
     override fun onDestroy() {
@@ -70,7 +72,7 @@ class AudioPlayActivity : BaseActivity() {
     }
 
     private fun initAudioPlayer() {
-        audioPlayer.resetPlayer(this, podcastItem.audioUrl)
+        audioPlayer.resetPlayer(this, podcastItem.pubDate, podcastItem.audioUrl)
 
         audioPlayer.getPlayerStateListener()
             .observeOn(AndroidSchedulers.mainThread())
@@ -92,7 +94,7 @@ class AudioPlayActivity : BaseActivity() {
                     }
 
                     is AudioPlayerState.Finished -> {
-                        //TODO: Next Audio
+                        viewModel.getNextPodcast(state.currentPubDate)
                     }
 
                     is AudioPlayerState.Paused -> {
@@ -176,5 +178,18 @@ class AudioPlayActivity : BaseActivity() {
             .subscribe {
                 audioPlayer.rewind()
             }.addTo(compositeDisposable)
+    }
+
+    private fun observableLiveData() {
+        viewModel.podcast.observe(this, {
+            if (it.isEmpty()) {
+                audioPlayer.destroyAudio()
+                return@observe
+            }
+
+            val entityPodcast = it.first()
+            binding.textTitle.text = entityPodcast.title
+            audioPlayer.resetPlayer(this, entityPodcast.pubDate, entityPodcast.audioUrl)
+        })
     }
 }
