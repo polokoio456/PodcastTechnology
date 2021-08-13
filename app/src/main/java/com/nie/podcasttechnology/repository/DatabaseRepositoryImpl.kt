@@ -1,5 +1,9 @@
 package com.nie.podcasttechnology.repository
 
+import androidx.paging.Pager
+import androidx.paging.PagingConfig
+import androidx.paging.PagingData
+import androidx.paging.rxjava2.flowable
 import com.nie.podcasttechnology.data.database.PodcastTechnologyDatabase
 import com.nie.podcasttechnology.data.database.dao.PodcastDao
 import com.nie.podcasttechnology.data.database.model.EntityPodcast
@@ -8,6 +12,7 @@ import io.reactivex.Completable
 import io.reactivex.Flowable
 import io.reactivex.Single
 import io.reactivex.schedulers.Schedulers
+import kotlinx.coroutines.ExperimentalCoroutinesApi
 import java.util.*
 
 class DatabaseRepositoryImpl(
@@ -27,9 +32,12 @@ class DatabaseRepositoryImpl(
             .subscribeOn(Schedulers.io())
     }
 
-    override fun listenPodcastsByDate(): Flowable<List<EntityPodcast>> {
-        return podcastDao.listenPodcastsByDate()
-            .subscribeOn(Schedulers.io())
+    @OptIn(ExperimentalCoroutinesApi::class)
+    override fun listenPodcastsByDatePaging(): Flowable<PagingData<EntityPodcast>> {
+        return Pager(
+            config = PagingConfig(pageSize = 20, prefetchDistance = 10),
+            pagingSourceFactory = { podcastDao.listenPodcastsByDate() }
+        ).flowable
     }
 
     override fun getNextPodcast(pubDate: Date): Single<List<EntityPodcast>> {

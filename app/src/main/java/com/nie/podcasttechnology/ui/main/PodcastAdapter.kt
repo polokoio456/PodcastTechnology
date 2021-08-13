@@ -2,6 +2,7 @@ package com.nie.podcasttechnology.ui.main
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import androidx.paging.PagingDataAdapter
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
@@ -15,9 +16,19 @@ import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.rxkotlin.addTo
 
-class PodcastAdapter : RecyclerView.Adapter<PodcastAdapter.PodcastViewHolder>() {
+class PodcastAdapter : PagingDataAdapter<EntityPodcast, PodcastAdapter.PodcastViewHolder>(COMPARATOR) {
 
-    private val items = mutableListOf<EntityPodcast>()
+    companion object {
+        private val COMPARATOR = object : DiffUtil.ItemCallback<EntityPodcast>() {
+            override fun areItemsTheSame(oldItem: EntityPodcast, newItem: EntityPodcast): Boolean {
+                return oldItem.pubDate.time == newItem.pubDate.time
+            }
+
+            override fun areContentsTheSame(oldItem: EntityPodcast, newItem: EntityPodcast): Boolean {
+                return oldItem.pubDate.time == newItem.pubDate.time
+            }
+        }
+    }
 
     private val compositeDisposable = CompositeDisposable()
 
@@ -29,16 +40,8 @@ class PodcastAdapter : RecyclerView.Adapter<PodcastAdapter.PodcastViewHolder>() 
     }
 
     override fun onBindViewHolder(holder: PodcastViewHolder, position: Int) {
-        holder.bind(items[position], compositeDisposable, onItemClicked)
-    }
-
-    override fun getItemCount() = items.size
-
-    fun addAll(list: List<EntityPodcast>) {
-        DiffUtil.calculateDiff(PodcastAdapterDiffCallback(items, list)).let {
-            items.clear()
-            items.addAll(list)
-            it.dispatchUpdatesTo(this)
+        getItem(position)?.let {
+            holder.bind(it, compositeDisposable, onItemClicked)
         }
     }
 

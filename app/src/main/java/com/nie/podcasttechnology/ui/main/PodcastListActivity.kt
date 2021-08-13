@@ -56,7 +56,7 @@ class PodcastListActivity : BaseActivity() {
         })
 
         viewModel.podcasts.observe(this, {
-            adapter.addAll(it)
+            adapter.submitData(lifecycle, it)
         })
     }
 }

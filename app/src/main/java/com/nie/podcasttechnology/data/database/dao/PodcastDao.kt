@@ -1,9 +1,9 @@
 package com.nie.podcasttechnology.data.database.dao
 
+import androidx.paging.PagingSource
 import androidx.room.*
 import com.nie.podcasttechnology.data.database.model.EntityPodcast
 import io.reactivex.Completable
-import io.reactivex.Flowable
 import io.reactivex.Single
 import java.util.*
 
@@ -14,7 +14,7 @@ interface PodcastDao {
 
     @Transaction
     @Query("SELECT * FROM Podcasts ORDER BY pubDate DESC")
-    fun listenPodcastsByDate(): Flowable<List<EntityPodcast>>
+    fun listenPodcastsByDate(): PagingSource<Int, EntityPodcast>
 
     @Query("SELECT * FROM Podcasts WHERE pubDate > :pubDate ORDER BY pubDate ASC LIMIT 1")
     fun getNextPodcast(pubDate: Date): Single<List<EntityPodcast>>
