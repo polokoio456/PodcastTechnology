@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    xmlns:tools="http://schemas.android.com/tools">
+    android:layout_height="match_parent">
 
     <androidx.appcompat.widget.AppCompatImageView
         android:id="@+id/imagePodcastCover"
@@ -46,22 +46,22 @@
         android:id="@+id/textCurrentDuration"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:textSize="16sp"
         android:textColor="?attr/colorText"
-        app:layout_constraintTop_toTopOf="@+id/textMaxDuration"
+        android:textSize="16sp"
         app:layout_constraintBottom_toBottomOf="@+id/textMaxDuration"
         app:layout_constraintEnd_toStartOf="@+id/textMaxDuration"
-        tools:text="01:30:45"/>
+        app:layout_constraintTop_toTopOf="@+id/textMaxDuration"
+        tools:text="01:30:45" />
 
     <androidx.appcompat.widget.AppCompatTextView
         android:id="@+id/textMaxDuration"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:textSize="16sp"
         android:textColor="?attr/colorText"
+        android:textSize="16sp"
         app:layout_constraintBottom_toTopOf="@+id/seekBar"
         app:layout_constraintEnd_toEndOf="@+id/seekBar"
-        tools:text="01:30:45"/>
+        tools:text="01:30:45" />
 
     <androidx.appcompat.widget.AppCompatImageView
         android:id="@+id/imageAudioController"
@@ -70,16 +70,16 @@
         android:layout_marginTop="24dp"
         android:background="?attr/selectableItemBackgroundBorderless"
         app:layout_constraintEnd_toStartOf="@+id/imageForward"
-        app:layout_constraintHorizontal_chainStyle="spread_inside"
         app:layout_constraintStart_toEndOf="@+id/imageRewind"
         app:layout_constraintTop_toBottomOf="@+id/seekBar"
         app:srcCompat="@drawable/ic_baseline_pause_circle_filled_24" />
 
     <androidx.appcompat.widget.AppCompatImageView
         android:id="@+id/imageForward"
-        android:layout_width="80dp"
-        android:layout_height="80dp"
+        android:layout_width="60dp"
+        android:layout_height="60dp"
         android:background="?attr/selectableItemBackgroundBorderless"
+        android:layout_marginStart="20dp"
         app:layout_constraintBottom_toBottomOf="@+id/imageAudioController"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@+id/imageAudioController"
@@ -88,11 +88,13 @@
 
     <androidx.appcompat.widget.AppCompatImageView
         android:id="@+id/imageRewind"
-        android:layout_width="80dp"
-        android:layout_height="80dp"
+        android:layout_width="60dp"
+        android:layout_height="60dp"
         android:background="?attr/selectableItemBackgroundBorderless"
+        android:layout_marginEnd="20dp"
         app:layout_constraintBottom_toBottomOf="@+id/imageAudioController"
         app:layout_constraintEnd_toStartOf="@+id/imageAudioController"
+        app:layout_constraintHorizontal_chainStyle="packed"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="@+id/imageAudioController"
         app:srcCompat="@drawable/ic_baseline_fast_rewind_24" />
