@@ -4,11 +4,11 @@ import com.nie.podcasttechnology.data.remote.model.Api
 import com.nie.podcasttechnology.data.remote.model.NetworkService
 import com.nie.podcasttechnology.repository.DatabaseRepository
 import com.nie.podcasttechnology.repository.DatabaseRepositoryImpl
-import com.nie.podcasttechnology.repository.MainRepository
-import com.nie.podcasttechnology.repository.MainRepositoryImpl
+import com.nie.podcasttechnology.repository.PodcastListRepository
+import com.nie.podcasttechnology.repository.PodcastListRepositoryImpl
 import org.koin.dsl.module
 
 val repositoryModule = module {
-    single<MainRepository> { MainRepositoryImpl(NetworkService().create(Api::class.java)) }
+    single<PodcastListRepository> { PodcastListRepositoryImpl(NetworkService().create(Api::class.java)) }
     single<DatabaseRepository> { DatabaseRepositoryImpl(get(), get()) }
 }

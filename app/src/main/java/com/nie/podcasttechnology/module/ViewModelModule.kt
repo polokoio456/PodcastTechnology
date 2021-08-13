@@ -1,13 +1,13 @@
 package com.nie.podcasttechnology.module
 
-import com.nie.podcasttechnology.ui.audioplay.AudioPlayViewModel
+import com.nie.podcasttechnology.ui.audioplay.PodcastPlayViewModel
 import com.nie.podcasttechnology.ui.detail.PodcastDetailViewModel
-import com.nie.podcasttechnology.ui.main.MainViewModel
+import com.nie.podcasttechnology.ui.main.PodcastListViewModel
 import org.koin.androidx.viewmodel.dsl.viewModel
 import org.koin.dsl.module
 
 val viewModelModule = module {
-    viewModel { MainViewModel(get(), get()) }
+    viewModel { PodcastListViewModel(get(), get()) }
     viewModel { PodcastDetailViewModel() }
-    viewModel { AudioPlayViewModel(get()) }
+    viewModel { PodcastPlayViewModel(get()) }
 }

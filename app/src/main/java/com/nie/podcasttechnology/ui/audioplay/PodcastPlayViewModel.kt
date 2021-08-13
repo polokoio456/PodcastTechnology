@@ -11,7 +11,7 @@ import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.rxkotlin.addTo
 import java.util.*
 
-class AudioPlayViewModel(private val databaseRepository: DatabaseRepository) : BaseViewModel() {
+class PodcastPlayViewModel(private val databaseRepository: DatabaseRepository) : BaseViewModel() {
 
     private val _podcast = MutableLiveData<List<EntityPodcast>>()
     val podcast: LiveData<List<EntityPodcast>> = _podcast

@@ -3,7 +3,6 @@ package com.nie.podcasttechnology.ui.audioplay
 import android.app.Activity
 import android.content.Intent
 import android.os.Bundle
-import android.util.Log
 import android.widget.SeekBar
 import androidx.core.content.ContextCompat
 import com.bumptech.glide.Glide
@@ -16,19 +15,18 @@ import com.nie.podcasttechnology.data.database.model.EntityPodcast
 import com.nie.podcasttechnology.databinding.ActivityAudioPlayBinding
 import com.nie.podcasttechnology.extension.throttleClick
 import com.nie.podcasttechnology.extension.toFormatTimeStr
-import com.nie.podcasttechnology.util.Constant
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.rxkotlin.addTo
 import org.koin.android.ext.android.inject
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
-class AudioPlayActivity : BaseActivity() {
+class PodcastPlayActivity : BaseActivity() {
 
     companion object {
         private const val KEY_PODCAST_ITEM = "key_podcast_item"
 
         fun start(activity: Activity, item: EntityPodcast) {
-            Intent(activity, AudioPlayActivity::class.java).apply {
+            Intent(activity, PodcastPlayActivity::class.java).apply {
                 putExtra(KEY_PODCAST_ITEM, item)
             }.let { activity.startActivity(it) }
         }
@@ -36,7 +34,7 @@ class AudioPlayActivity : BaseActivity() {
 
     private val binding by lazy { ActivityAudioPlayBinding.inflate(layoutInflater) }
 
-    override val viewModel by viewModel<AudioPlayViewModel>()
+    override val viewModel by viewModel<PodcastPlayViewModel>()
 
     private val podcastItem by lazy { intent.getSerializableExtra(KEY_PODCAST_ITEM) as EntityPodcast }
 

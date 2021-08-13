@@ -13,7 +13,7 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.PodcastTechnology">
         <activity
-            android:name=".ui.main.MainActivity"
+            android:name=".ui.main.PodcastListActivity"
             android:screenOrientation="portrait"
             android:exported="true">
             <intent-filter>
@@ -28,7 +28,7 @@
             android:screenOrientation="portrait" />
 
         <activity
-            android:name=".ui.audioplay.AudioPlayActivity"
+            android:name=".ui.audioplay.PodcastPlayActivity"
             android:screenOrientation="portrait" />
     </application>
 

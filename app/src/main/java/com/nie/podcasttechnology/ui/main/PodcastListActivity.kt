@@ -10,11 +10,11 @@ import com.nie.podcasttechnology.ui.detail.PodcastDetailActivity
 import org.koin.android.ext.android.inject
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
-class MainActivity : BaseActivity() {
+class PodcastListActivity : BaseActivity() {
 
     private val binding by lazy { ActivityMainBinding.inflate(layoutInflater) }
 
-    override val viewModel by viewModel<MainViewModel>()
+    override val viewModel by viewModel<PodcastListViewModel>()
 
     private val adapter by inject<PodcastAdapter>()
 

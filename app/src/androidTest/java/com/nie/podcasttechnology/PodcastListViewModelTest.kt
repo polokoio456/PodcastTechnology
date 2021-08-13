@@ -2,18 +2,18 @@ package com.nie.podcasttechnology
 
 import com.nie.podcasttechnology.data.remote.model.*
 import com.nie.podcasttechnology.repository.DatabaseRepository
-import com.nie.podcasttechnology.repository.MainRepository
-import com.nie.podcasttechnology.ui.main.MainViewModel
+import com.nie.podcasttechnology.repository.PodcastListRepository
+import com.nie.podcasttechnology.ui.main.PodcastListViewModel
 import io.mockk.*
 import io.reactivex.Completable
 import io.reactivex.Single
 import org.junit.Before
 import org.junit.Test
 
-class MainViewModelTest {
-    private lateinit var viewModel: MainViewModel
+class PodcastListViewModelTest {
+    private lateinit var viewModel: PodcastListViewModel
 
-    private val mainRepository = mockk<MainRepository>(relaxed = true)
+    private val mainRepository = mockk<PodcastListRepository>(relaxed = true)
     private val databaseRepository = mockk<DatabaseRepository>(relaxed = true)
 
     private val image = Image(
@@ -49,7 +49,7 @@ class MainViewModelTest {
     @Before
     fun setUp() {
         MockKAnnotations.init(this, relaxUnitFun = true)
-        viewModel = MainViewModel(mainRepository, databaseRepository)
+        viewModel = PodcastListViewModel(mainRepository, databaseRepository)
     }
 
     @Test

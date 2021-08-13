@@ -5,7 +5,7 @@ import com.nie.podcasttechnology.data.remote.model.Rss
 import io.reactivex.Single
 import io.reactivex.schedulers.Schedulers
 
-class MainRepositoryImpl(private val api: Api) : MainRepository {
+class PodcastListRepositoryImpl(private val api: Api) : PodcastListRepository {
 
     override fun fetchPodcasts(): Single<Rss> {
         return api.fetchPodcasts()

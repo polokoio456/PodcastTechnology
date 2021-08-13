@@ -10,7 +10,7 @@ import com.nie.podcasttechnology.base.BaseActivity
 import com.nie.podcasttechnology.data.database.model.EntityPodcast
 import com.nie.podcasttechnology.databinding.ActivityPodcastDetailBinding
 import com.nie.podcasttechnology.extension.throttleClick
-import com.nie.podcasttechnology.ui.audioplay.AudioPlayActivity
+import com.nie.podcasttechnology.ui.audioplay.PodcastPlayActivity
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.rxkotlin.addTo
 import org.koin.androidx.viewmodel.ext.android.viewModel
@@ -56,7 +56,7 @@ class PodcastDetailActivity : BaseActivity() {
             .throttleClick()
             .observeOn(AndroidSchedulers.mainThread())
             .subscribe {
-                AudioPlayActivity.start(this, podcastItem)
+                PodcastPlayActivity.start(this, podcastItem)
             }.addTo(compositeDisposable)
     }
 }

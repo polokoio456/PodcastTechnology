@@ -6,13 +6,13 @@ import androidx.lifecycle.MutableLiveData
 import com.nie.podcasttechnology.base.BaseViewModel
 import com.nie.podcasttechnology.data.database.model.EntityPodcast
 import com.nie.podcasttechnology.repository.DatabaseRepository
-import com.nie.podcasttechnology.repository.MainRepository
+import com.nie.podcasttechnology.repository.PodcastListRepository
 import com.nie.podcasttechnology.util.Constant
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.rxkotlin.addTo
 
-class MainViewModel(
-    private val mainRepository: MainRepository,
+class PodcastListViewModel(
+    private val podcastListRepository: PodcastListRepository,
     private val databaseRepository: DatabaseRepository
 ) : BaseViewModel() {
 
@@ -24,7 +24,7 @@ class MainViewModel(
 
     fun fetchPodcasts() {
         databaseRepository.clearAllDatabaseTables()
-            .flatMap { mainRepository.fetchPodcasts() }
+            .flatMap { podcastListRepository.fetchPodcasts() }
             .doOnSuccess {
                 _coverImageUrl.postValue(it.channel.image[0].imageUrl)
             }
