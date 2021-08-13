@@ -60,7 +60,7 @@ class MainViewModelTest {
 
         viewModel.fetchPodcasts()
 
-        verifyOrder {
+        verify {
             databaseRepository.clearAllDatabaseTables()
             mainRepository.fetchPodcasts()
             databaseRepository.insertPodcasts(rss.channel.items)
