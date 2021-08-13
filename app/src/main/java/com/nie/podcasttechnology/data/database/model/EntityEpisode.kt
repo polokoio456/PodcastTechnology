@@ -3,13 +3,13 @@ package com.nie.podcasttechnology.data.database.model
 import androidx.room.ColumnInfo
 import androidx.room.Entity
 import androidx.room.PrimaryKey
-import com.nie.podcasttechnology.data.remote.model.PodcastItem
+import com.nie.podcasttechnology.data.remote.model.EpisodeItem
 import com.nie.podcasttechnology.extension.xmlPubDateStrToDate
 import java.io.Serializable
 import java.util.*
 
-@Entity(tableName = "Podcasts")
-data class EntityPodcast(
+@Entity(tableName = "Episodes")
+data class EntityEpisode(
     @PrimaryKey
     @ColumnInfo(name = "pubDate")
     val pubDate: Date,
@@ -25,7 +25,7 @@ data class EntityPodcast(
     val imageUrl: String
 ) : Serializable {
     companion object {
-        fun from(item: PodcastItem) = EntityPodcast(
+        fun from(item: EpisodeItem) = EntityEpisode(
             pubDate = item.pubDate.xmlPubDateStrToDate(),
             title = item.title,
             description = item.description,

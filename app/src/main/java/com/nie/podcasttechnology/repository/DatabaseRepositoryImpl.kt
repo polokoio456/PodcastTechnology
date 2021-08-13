@@ -5,9 +5,9 @@ import androidx.paging.PagingConfig
 import androidx.paging.PagingData
 import androidx.paging.rxjava2.flowable
 import com.nie.podcasttechnology.data.database.PodcastTechnologyDatabase
-import com.nie.podcasttechnology.data.database.dao.PodcastDao
-import com.nie.podcasttechnology.data.database.model.EntityPodcast
-import com.nie.podcasttechnology.data.remote.model.PodcastItem
+import com.nie.podcasttechnology.data.database.dao.EpisodeDao
+import com.nie.podcasttechnology.data.database.model.EntityEpisode
+import com.nie.podcasttechnology.data.remote.model.EpisodeItem
 import io.reactivex.Completable
 import io.reactivex.Flowable
 import io.reactivex.Single
@@ -17,7 +17,7 @@ import java.util.*
 
 class DatabaseRepositoryImpl(
     private val database: PodcastTechnologyDatabase,
-    private val podcastDao: PodcastDao
+    private val episodeDao: EpisodeDao
 ) : DatabaseRepository {
 
     override fun clearAllDatabaseTables(): Single<Boolean> {
@@ -27,21 +27,21 @@ class DatabaseRepositoryImpl(
         }.subscribeOn(Schedulers.io())
     }
 
-    override fun insertPodcasts(podcasts: List<PodcastItem>): Completable {
-        return podcastDao.insertPodcasts(podcasts.map { EntityPodcast.from(it) })
+    override fun insertEpisodes(episodes: List<EpisodeItem>): Completable {
+        return episodeDao.insertEpisodes(episodes.map { EntityEpisode.from(it) })
             .subscribeOn(Schedulers.io())
     }
 
     @OptIn(ExperimentalCoroutinesApi::class)
-    override fun listenPodcastsByDatePaging(): Flowable<PagingData<EntityPodcast>> {
+    override fun listenEpisodesByDatePaging(): Flowable<PagingData<EntityEpisode>> {
         return Pager(
             config = PagingConfig(pageSize = 20, prefetchDistance = 10),
-            pagingSourceFactory = { podcastDao.listenPodcastsByDate() }
+            pagingSourceFactory = { episodeDao.listenEpisodesByDate() }
         ).flowable
     }
 
-    override fun getNextPodcast(pubDate: Date): Single<List<EntityPodcast>> {
-        return podcastDao.getNextPodcast(pubDate)
+    override fun getNextEpisode(pubDate: Date): Single<List<EntityEpisode>> {
+        return episodeDao.getNextEpisode(pubDate)
             .subscribeOn(Schedulers.io())
     }
 }

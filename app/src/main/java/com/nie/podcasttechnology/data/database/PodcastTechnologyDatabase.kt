@@ -6,13 +6,13 @@ import androidx.room.Room
 import androidx.room.RoomDatabase
 import androidx.room.TypeConverters
 import com.nie.podcasttechnology.data.database.converter.DateTypeConverter
-import com.nie.podcasttechnology.data.database.dao.PodcastDao
-import com.nie.podcasttechnology.data.database.model.EntityPodcast
+import com.nie.podcasttechnology.data.database.dao.EpisodeDao
+import com.nie.podcasttechnology.data.database.model.EntityEpisode
 
 @Database(
     exportSchema = false,
     entities = [
-        EntityPodcast::class
+        EntityEpisode::class
     ],
     version = 1
 )
@@ -20,7 +20,7 @@ import com.nie.podcasttechnology.data.database.model.EntityPodcast
     DateTypeConverter::class
 )
 abstract class PodcastTechnologyDatabase : RoomDatabase() {
-    abstract fun podcastDao(): PodcastDao
+    abstract fun podcastDao(): EpisodeDao
 
     companion object {
         @Volatile

@@ -10,20 +10,20 @@ import com.nie.podcasttechnology.ui.detail.PodcastDetailActivity
 import org.koin.android.ext.android.inject
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
-class PodcastListActivity : BaseActivity() {
+class EpisodeListActivity : BaseActivity() {
 
     private val binding by lazy { ActivityMainBinding.inflate(layoutInflater) }
 
-    override val viewModel by viewModel<PodcastListViewModel>()
+    override val viewModel by viewModel<EpisodeListViewModel>()
 
-    private val adapter by inject<PodcastAdapter>()
+    private val adapter by inject<EpisodeAdapter>()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(binding.root)
 
-        viewModel.listenPodcast()
-        viewModel.fetchPodcasts()
+        viewModel.listenEpisodes()
+        viewModel.fetchEpisodes()
 
         initView()
         setOnClickListener()
@@ -36,9 +36,9 @@ class PodcastListActivity : BaseActivity() {
     }
 
     private fun initView() {
-        binding.recyclerViewPodcasts.isNestedScrollingEnabled = false
-        binding.recyclerViewPodcasts.layoutManager = LinearLayoutManager(this)
-        binding.recyclerViewPodcasts.adapter = adapter
+        binding.recyclerViewEpisodes.isNestedScrollingEnabled = false
+        binding.recyclerViewEpisodes.layoutManager = LinearLayoutManager(this)
+        binding.recyclerViewEpisodes.adapter = adapter
     }
 
     private fun setOnClickListener() {
@@ -55,7 +55,7 @@ class PodcastListActivity : BaseActivity() {
                 .into(binding.imagePodcastCover)
         })
 
-        viewModel.podcasts.observe(this, {
+        viewModel.episodes.observe(this, {
             adapter.submitData(lifecycle, it)
         })
     }

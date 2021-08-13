@@ -11,7 +11,7 @@ import com.nie.podcasttechnology.R
 import com.nie.podcasttechnology.base.BaseActivity
 import com.nie.podcasttechnology.bean.AudioPlayer
 import com.nie.podcasttechnology.bean.AudioPlayerState
-import com.nie.podcasttechnology.data.database.model.EntityPodcast
+import com.nie.podcasttechnology.data.database.model.EntityEpisode
 import com.nie.podcasttechnology.databinding.ActivityAudioPlayBinding
 import com.nie.podcasttechnology.extension.throttleClick
 import com.nie.podcasttechnology.extension.toFormatTimeStr
@@ -20,13 +20,13 @@ import io.reactivex.rxkotlin.addTo
 import org.koin.android.ext.android.inject
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
-class PodcastPlayActivity : BaseActivity() {
+class EpisodePlayerActivity : BaseActivity() {
 
     companion object {
         private const val KEY_PODCAST_ITEM = "key_podcast_item"
 
-        fun start(activity: Activity, item: EntityPodcast) {
-            Intent(activity, PodcastPlayActivity::class.java).apply {
+        fun start(activity: Activity, item: EntityEpisode) {
+            Intent(activity, EpisodePlayerActivity::class.java).apply {
                 putExtra(KEY_PODCAST_ITEM, item)
             }.let { activity.startActivity(it) }
         }
@@ -34,9 +34,9 @@ class PodcastPlayActivity : BaseActivity() {
 
     private val binding by lazy { ActivityAudioPlayBinding.inflate(layoutInflater) }
 
-    override val viewModel by viewModel<PodcastPlayViewModel>()
+    override val viewModel by viewModel<EpisodePlayerViewModel>()
 
-    private val podcastItem by lazy { intent.getSerializableExtra(KEY_PODCAST_ITEM) as EntityPodcast }
+    private val podcastItem by lazy { intent.getSerializableExtra(KEY_PODCAST_ITEM) as EntityEpisode }
 
     private val audioPlayer by inject<AudioPlayer>()
 
@@ -179,7 +179,7 @@ class PodcastPlayActivity : BaseActivity() {
     }
 
     private fun observableLiveData() {
-        viewModel.podcast.observe(this, {
+        viewModel.episode.observe(this, {
             if (it.isEmpty()) {
                 audioPlayer.destroyAudio()
                 return@observe

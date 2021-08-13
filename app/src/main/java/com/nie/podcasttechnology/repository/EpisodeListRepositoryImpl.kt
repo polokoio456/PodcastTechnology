@@ -5,10 +5,10 @@ import com.nie.podcasttechnology.data.remote.model.Rss
 import io.reactivex.Single
 import io.reactivex.schedulers.Schedulers
 
-class PodcastListRepositoryImpl(private val api: Api) : PodcastListRepository {
+class EpisodeListRepositoryImpl(private val api: Api) : EpisodeListRepository {
 
-    override fun fetchPodcasts(): Single<Rss> {
-        return api.fetchPodcasts()
+    override fun fetchEpisodes(): Single<Rss> {
+        return api.fetchEpisodes()
             .subscribeOn(Schedulers.io())
     }
 }

@@ -29,11 +29,11 @@ data class Channel(
     val image: List<Image>,
     @field:ElementList(entry = "item", inline = true, required = false)
     @param:ElementList(entry = "item", inline = true, required = false)
-    val items: List<PodcastItem>
+    val items: List<EpisodeItem>
 )
 
 @Root(name = "item", strict = false)
-data class PodcastItem(
+data class EpisodeItem(
     @field:Element(name = "title", required = false)
     @param:Element(name = "title", required = false)
     val title: String,

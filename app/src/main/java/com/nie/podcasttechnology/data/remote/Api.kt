@@ -6,5 +6,5 @@ import retrofit2.http.GET
 
 interface Api {
     @GET("users/soundcloud:users:322164009/sounds.rss")
-    fun fetchPodcasts(): Single<Rss>
+    fun fetchEpisodes(): Single<Rss>
 }

@@ -8,20 +8,19 @@ import com.jakewharton.rxbinding2.view.RxView
 import com.nie.podcasttechnology.R
 import com.nie.podcasttechnology.base.BaseActivity
 import com.nie.podcasttechnology.base.BaseViewModel
-import com.nie.podcasttechnology.data.database.model.EntityPodcast
+import com.nie.podcasttechnology.data.database.model.EntityEpisode
 import com.nie.podcasttechnology.databinding.ActivityPodcastDetailBinding
 import com.nie.podcasttechnology.extension.throttleClick
-import com.nie.podcasttechnology.ui.audioplay.PodcastPlayActivity
+import com.nie.podcasttechnology.ui.audioplay.EpisodePlayerActivity
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.rxkotlin.addTo
-import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class PodcastDetailActivity : BaseActivity() {
 
     companion object {
         private const val KEY_PODCAST_ITEM = "key_podcast_item"
 
-        fun start(activity: Activity, item: EntityPodcast) {
+        fun start(activity: Activity, item: EntityEpisode) {
             Intent(activity, PodcastDetailActivity::class.java).apply {
                 putExtra(KEY_PODCAST_ITEM, item)
             }.let { activity.startActivity(it) }
@@ -32,7 +31,7 @@ class PodcastDetailActivity : BaseActivity() {
 
     override val viewModel: BaseViewModel? = null
 
-    private val podcastItem by lazy { intent.getSerializableExtra(KEY_PODCAST_ITEM) as EntityPodcast }
+    private val podcastItem by lazy { intent.getSerializableExtra(KEY_PODCAST_ITEM) as EntityEpisode }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -57,7 +56,7 @@ class PodcastDetailActivity : BaseActivity() {
             .throttleClick()
             .observeOn(AndroidSchedulers.mainThread())
             .subscribe {
-                PodcastPlayActivity.start(this, podcastItem)
+                EpisodePlayerActivity.start(this, podcastItem)
             }.addTo(compositeDisposable)
     }
 }

@@ -2,18 +2,18 @@ package com.nie.podcasttechnology
 
 import com.nie.podcasttechnology.data.remote.model.*
 import com.nie.podcasttechnology.repository.DatabaseRepository
-import com.nie.podcasttechnology.repository.PodcastListRepository
-import com.nie.podcasttechnology.ui.main.PodcastListViewModel
+import com.nie.podcasttechnology.repository.EpisodeListRepository
+import com.nie.podcasttechnology.ui.main.EpisodeListViewModel
 import io.mockk.*
 import io.reactivex.Completable
 import io.reactivex.Single
 import org.junit.Before
 import org.junit.Test
 
-class PodcastListViewModelTest {
-    private lateinit var viewModel: PodcastListViewModel
+class EpisodeListViewModelTest {
+    private lateinit var viewModel: EpisodeListViewModel
 
-    private val mainRepository = mockk<PodcastListRepository>(relaxed = true)
+    private val mainRepository = mockk<EpisodeListRepository>(relaxed = true)
     private val databaseRepository = mockk<DatabaseRepository>(relaxed = true)
 
     private val image = Image(
@@ -27,7 +27,7 @@ class PodcastListViewModelTest {
         "audioUrl"
     )
 
-    private val podcastItem = PodcastItem(
+    private val podcastItem = EpisodeItem(
         "title",
         "Sat, 24 Apr 2010 14:01:00 GMT",
         "description",
@@ -49,21 +49,21 @@ class PodcastListViewModelTest {
     @Before
     fun setUp() {
         MockKAnnotations.init(this, relaxUnitFun = true)
-        viewModel = PodcastListViewModel(mainRepository, databaseRepository)
+        viewModel = EpisodeListViewModel(mainRepository, databaseRepository)
     }
 
     @Test
-    fun fetchPodcasts() {
+    fun fetchEpisodes() {
         every { databaseRepository.clearAllDatabaseTables() } returns Single.just(true)
-        every { mainRepository.fetchPodcasts() } returns Single.just(rss)
-        every { databaseRepository.insertPodcasts(rss.channel.items) } returns Completable.complete()
+        every { mainRepository.fetchEpisodes() } returns Single.just(rss)
+        every { databaseRepository.insertEpisodes(rss.channel.items) } returns Completable.complete()
 
-        viewModel.fetchPodcasts()
+        viewModel.fetchEpisodes()
 
         verifyOrder {
             databaseRepository.clearAllDatabaseTables()
-            mainRepository.fetchPodcasts()
-            databaseRepository.insertPodcasts(rss.channel.items)
+            mainRepository.fetchEpisodes()
+            databaseRepository.insertEpisodes(rss.channel.items)
         }
     }
 }
