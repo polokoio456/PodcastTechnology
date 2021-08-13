@@ -16,7 +16,7 @@ interface PodcastDao {
     @Query("SELECT * FROM Podcasts ORDER BY pubDate DESC")
     fun listenPodcastsByDate(): Flowable<List<EntityPodcast>>
 
-    @Query("SELECT * FROM Podcasts WHERE pubDate > :pubDate ORDER BY pubDate DESC LIMIT 1")
+    @Query("SELECT * FROM Podcasts WHERE pubDate > :pubDate ORDER BY pubDate ASC LIMIT 1")
     fun getNextPodcast(pubDate: Date): Single<List<EntityPodcast>>
 
     @Query("DELETE FROM Podcasts")
