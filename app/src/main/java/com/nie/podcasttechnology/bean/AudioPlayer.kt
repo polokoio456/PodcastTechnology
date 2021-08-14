@@ -32,7 +32,8 @@ class AudioPlayer : LifecycleObserver {
     private var player: MediaPlayer? = null
 
     private var isPrepared = false
-    private var currentPubData = Date()
+
+    private lateinit var currentPubData: Date
 
     @OnLifecycleEvent(Lifecycle.Event.ON_START)
     fun startAudio() {
@@ -135,6 +136,8 @@ class AudioPlayer : LifecycleObserver {
     fun rewind() {
         player?.seekTo(player!!.currentPosition - INTERVAL_DURATION)
     }
+
+    fun getCurrentPosition() = player?.currentPosition
 
     fun getPlayerStateListener(): Flowable<AudioPlayerState> = playerSubject.toFlowable(BackpressureStrategy.BUFFER)
     fun getPlayerBufferProgressListener(): Flowable<Int> = playerBufferingLevelSubject.toFlowable(BackpressureStrategy.BUFFER)

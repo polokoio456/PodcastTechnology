@@ -140,6 +140,7 @@ class EpisodePlayerActivity : BaseActivity() {
                 if (fromUser) {
                     audioPlayer.playerSeekTo(progress)
                     binding.seekBar.progress = progress
+                    setCurrentDurationText(audioPlayer.getCurrentPosition()!! / 1000)
                 }
             }
 
