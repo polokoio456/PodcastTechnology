@@ -54,7 +54,7 @@ class AudioPlayer : LifecycleObserver {
             return
         }
 
-        Flowable.interval(500, TimeUnit.MILLISECONDS)
+        Flowable.interval(250, TimeUnit.MILLISECONDS)
             .observeOn(Schedulers.io())
             .subscribe({
                 player?.currentPosition?.let {
