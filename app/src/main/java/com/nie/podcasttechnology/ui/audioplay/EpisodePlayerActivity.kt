@@ -86,9 +86,7 @@ class EpisodePlayerActivity : BaseActivity() {
                     is AudioPlayerState.Playing -> {
                         val drawable = ContextCompat.getDrawable(this, R.drawable.ic_baseline_pause_circle_filled_24)
                         binding.imageAudioController.setImageDrawable(drawable)
-
-                        updateSeekBarProgress(state.position)
-                        setCurrentDurationText(state.position / 1000)
+                        updateSeekBarAndTimeText()
                     }
 
                     is AudioPlayerState.Finished -> {
@@ -113,34 +111,12 @@ class EpisodePlayerActivity : BaseActivity() {
             }).addTo(compositeDisposable)
     }
 
-    private fun setMaxDurationText(maxDuration: Int) {
-        binding.textMaxDuration.text = maxDuration.toFormatTimeStr()
-    }
-
-    private fun setCurrentDurationText(currentPosition: Int) {
-        val str = "${currentPosition.toFormatTimeStr()} / "
-        binding.textCurrentDuration.text = str
-    }
-
-    private fun initSeekBarMax(duration: Int) {
-        binding.seekBar.max = duration
-    }
-
-    private fun updateSeekBarProgress(currentPosition: Int) {
-        binding.seekBar.progress = currentPosition
-    }
-
-    private fun updateSecondaryProgress(progress: Int) {
-        binding.seekBar.secondaryProgress = progress
-    }
-
     private fun initSeekBarListener() {
         binding.seekBar.setOnSeekBarChangeListener(object : SeekBar.OnSeekBarChangeListener {
             override fun onProgressChanged(seekBar: SeekBar?, progress: Int, fromUser: Boolean) {
                 if (fromUser) {
                     audioPlayer.playerSeekTo(progress)
-                    binding.seekBar.progress = progress
-                    setCurrentDurationText(audioPlayer.getCurrentPosition()!! / 1000)
+                    updateSeekBarAndTimeText()
                 }
             }
 
@@ -170,12 +146,14 @@ class EpisodePlayerActivity : BaseActivity() {
             .observeOn(AndroidSchedulers.mainThread())
             .subscribe {
                 audioPlayer.forward()
+                updateSeekBarAndTimeText()
             }.addTo(compositeDisposable)
 
         RxView.clicks(binding.imageRewind)
             .observeOn(AndroidSchedulers.mainThread())
             .subscribe {
                 audioPlayer.rewind()
+                updateSeekBarAndTimeText()
             }.addTo(compositeDisposable)
     }
 
@@ -190,5 +168,32 @@ class EpisodePlayerActivity : BaseActivity() {
             binding.textTitle.text = entityPodcast.title
             audioPlayer.resetPlayer(this, entityPodcast.pubDate, entityPodcast.audioUrl)
         })
+    }
+
+    private fun setMaxDurationText(maxDuration: Int) {
+        binding.textMaxDuration.text = maxDuration.toFormatTimeStr()
+    }
+
+    private fun setCurrentDurationText(currentPosition: Int) {
+        val str = "${currentPosition.toFormatTimeStr()} / "
+        binding.textCurrentDuration.text = str
+    }
+
+    private fun initSeekBarMax(duration: Int) {
+        binding.seekBar.max = duration
+    }
+
+    private fun updateSeekBarProgress(currentPosition: Int) {
+        binding.seekBar.progress = currentPosition
+    }
+
+    private fun updateSecondaryProgress(progress: Int) {
+        binding.seekBar.secondaryProgress = progress
+    }
+
+    private fun updateSeekBarAndTimeText() {
+        val currentPosition = audioPlayer.getCurrentPosition()!!
+        updateSeekBarProgress(currentPosition)
+        setCurrentDurationText(currentPosition / 1000)
     }
 }
