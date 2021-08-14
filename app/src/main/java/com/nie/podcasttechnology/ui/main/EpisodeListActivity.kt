@@ -6,7 +6,7 @@ import com.bumptech.glide.Glide
 import com.nie.podcasttechnology.R
 import com.nie.podcasttechnology.base.BaseActivity
 import com.nie.podcasttechnology.databinding.ActivityMainBinding
-import com.nie.podcasttechnology.ui.detail.PodcastDetailActivity
+import com.nie.podcasttechnology.ui.detail.EpisodeDetailActivity
 import org.koin.android.ext.android.inject
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
@@ -43,7 +43,7 @@ class EpisodeListActivity : BaseActivity() {
 
     private fun setOnClickListener() {
         adapter.onItemClicked = {
-            PodcastDetailActivity.start(this, it)
+            EpisodeDetailActivity.start(this, it)
         }
     }
 

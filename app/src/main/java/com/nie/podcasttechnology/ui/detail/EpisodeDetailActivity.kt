@@ -15,13 +15,13 @@ import com.nie.podcasttechnology.ui.audioplay.EpisodePlayerActivity
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.rxkotlin.addTo
 
-class PodcastDetailActivity : BaseActivity() {
+class EpisodeDetailActivity : BaseActivity() {
 
     companion object {
         private const val KEY_PODCAST_ITEM = "key_podcast_item"
 
         fun start(activity: Activity, item: EntityEpisode) {
-            Intent(activity, PodcastDetailActivity::class.java).apply {
+            Intent(activity, EpisodeDetailActivity::class.java).apply {
                 putExtra(KEY_PODCAST_ITEM, item)
             }.let { activity.startActivity(it) }
         }

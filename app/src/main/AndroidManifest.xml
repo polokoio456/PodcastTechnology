@@ -24,7 +24,7 @@
         </activity>
 
         <activity
-            android:name=".ui.detail.PodcastDetailActivity"
+            android:name=".ui.detail.EpisodeDetailActivity"
             android:screenOrientation="portrait" />
 
         <activity
