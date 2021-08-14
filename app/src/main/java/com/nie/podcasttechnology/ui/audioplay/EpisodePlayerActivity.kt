@@ -79,7 +79,7 @@ class EpisodePlayerActivity : BaseActivity() {
 
                 when (state) {
                     is AudioPlayerState.Prepare -> {
-                        initSeekBarMax(state.maxDuration)
+                        setSeekBarMax(state.maxDuration)
                         setMaxDurationText(state.maxDuration / 1000)
                     }
 
@@ -179,7 +179,7 @@ class EpisodePlayerActivity : BaseActivity() {
         binding.textCurrentDuration.text = str
     }
 
-    private fun initSeekBarMax(duration: Int) {
+    private fun setSeekBarMax(duration: Int) {
         binding.seekBar.max = duration
     }
 
