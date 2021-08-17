@@ -8,7 +8,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.jakewharton.rxbinding2.view.RxView
 import com.nie.podcasttechnology.R
-import com.nie.podcasttechnology.data.database.model.EntityEpisode
+import com.nie.podcasttechnology.data.ui.ViewEpisode
 import com.nie.podcasttechnology.databinding.ItemPodcastBinding
 import com.nie.podcasttechnology.extension.throttleClick
 import com.nie.podcasttechnology.extension.toDateString
@@ -16,15 +16,15 @@ import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.rxkotlin.addTo
 
-class EpisodeAdapter : PagingDataAdapter<EntityEpisode, EpisodeAdapter.PodcastViewHolder>(COMPARATOR) {
+class EpisodeAdapter : PagingDataAdapter<ViewEpisode, EpisodeAdapter.PodcastViewHolder>(COMPARATOR) {
 
     companion object {
-        private val COMPARATOR = object : DiffUtil.ItemCallback<EntityEpisode>() {
-            override fun areItemsTheSame(oldItem: EntityEpisode, newItem: EntityEpisode): Boolean {
+        private val COMPARATOR = object : DiffUtil.ItemCallback<ViewEpisode>() {
+            override fun areItemsTheSame(oldItem: ViewEpisode, newItem: ViewEpisode): Boolean {
                 return oldItem.pubDate.time == newItem.pubDate.time
             }
 
-            override fun areContentsTheSame(oldItem: EntityEpisode, newItem: EntityEpisode): Boolean {
+            override fun areContentsTheSame(oldItem: ViewEpisode, newItem: ViewEpisode): Boolean {
                 return oldItem.pubDate.time == newItem.pubDate.time
             }
         }
@@ -32,7 +32,7 @@ class EpisodeAdapter : PagingDataAdapter<EntityEpisode, EpisodeAdapter.PodcastVi
 
     private val compositeDisposable = CompositeDisposable()
 
-    var onItemClicked = { _: EntityEpisode ->  }
+    var onItemClicked = { _: ViewEpisode ->  }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): PodcastViewHolder {
         val binding = ItemPodcastBinding.inflate(LayoutInflater.from(parent.context), parent, false)
@@ -49,7 +49,7 @@ class EpisodeAdapter : PagingDataAdapter<EntityEpisode, EpisodeAdapter.PodcastVi
 
     class PodcastViewHolder(private val binding: ItemPodcastBinding) : RecyclerView.ViewHolder(binding.root) {
 
-        fun bind(item: EntityEpisode, compositeDisposable: CompositeDisposable, onItemClicked: (EntityEpisode) -> Unit) {
+        fun bind(item: ViewEpisode, compositeDisposable: CompositeDisposable, onItemClicked: (ViewEpisode) -> Unit) {
             RxView.clicks(binding.root)
                 .throttleClick()
                 .observeOn(AndroidSchedulers.mainThread())

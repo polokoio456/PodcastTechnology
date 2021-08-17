@@ -4,6 +4,7 @@ import androidx.room.ColumnInfo
 import androidx.room.Entity
 import androidx.room.PrimaryKey
 import com.nie.podcasttechnology.data.remote.model.EpisodeItem
+import com.nie.podcasttechnology.data.ui.ViewEpisode
 import com.nie.podcasttechnology.extension.xmlPubDateStrToDate
 import java.io.Serializable
 import java.util.*
@@ -24,6 +25,16 @@ data class EntityEpisode(
     @ColumnInfo(name = "imageUrl")
     val imageUrl: String
 ) : Serializable {
+
+    fun toViewEpisode() = ViewEpisode(
+        pubDate = pubDate,
+        title = title,
+        description = description,
+        type = type,
+        audioUrl = audioUrl,
+        imageUrl = imageUrl
+    )
+
     companion object {
         fun from(item: EpisodeItem) = EntityEpisode(
             pubDate = item.pubDate.xmlPubDateStrToDate(),

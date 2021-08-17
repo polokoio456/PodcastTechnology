@@ -11,7 +11,7 @@ import com.nie.podcasttechnology.R
 import com.nie.podcasttechnology.base.BaseActivity
 import com.nie.podcasttechnology.bean.AudioPlayer
 import com.nie.podcasttechnology.bean.AudioPlayerState
-import com.nie.podcasttechnology.data.database.model.EntityEpisode
+import com.nie.podcasttechnology.data.ui.ViewEpisode
 import com.nie.podcasttechnology.databinding.ActivityAudioPlayBinding
 import com.nie.podcasttechnology.extension.throttleClick
 import com.nie.podcasttechnology.extension.toFormatTimeStr
@@ -25,7 +25,7 @@ class EpisodePlayerActivity : BaseActivity() {
     companion object {
         private const val KEY_PODCAST_ITEM = "key_podcast_item"
 
-        fun start(activity: Activity, item: EntityEpisode) {
+        fun start(activity: Activity, item: ViewEpisode) {
             Intent(activity, EpisodePlayerActivity::class.java).apply {
                 putExtra(KEY_PODCAST_ITEM, item)
             }.let { activity.startActivity(it) }
@@ -36,7 +36,7 @@ class EpisodePlayerActivity : BaseActivity() {
 
     override val viewModel by viewModel<EpisodePlayerViewModel>()
 
-    private val podcastItem by lazy { intent.getSerializableExtra(KEY_PODCAST_ITEM) as EntityEpisode }
+    private val podcastItem by lazy { intent.getSerializableExtra(KEY_PODCAST_ITEM) as ViewEpisode }
 
     private val audioPlayer by inject<AudioPlayer>()
 
@@ -164,9 +164,9 @@ class EpisodePlayerActivity : BaseActivity() {
                 return@observe
             }
 
-            val entityPodcast = it.first()
-            binding.textTitle.text = entityPodcast.title
-            audioPlayer.resetPlayer(this, entityPodcast.pubDate, entityPodcast.audioUrl)
+            val episode = it.first()
+            binding.textTitle.text = episode.title
+            audioPlayer.resetPlayer(this, episode.pubDate, episode.audioUrl)
         })
     }
 

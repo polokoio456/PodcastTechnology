@@ -8,7 +8,7 @@ import com.jakewharton.rxbinding2.view.RxView
 import com.nie.podcasttechnology.R
 import com.nie.podcasttechnology.base.BaseActivity
 import com.nie.podcasttechnology.base.BaseViewModel
-import com.nie.podcasttechnology.data.database.model.EntityEpisode
+import com.nie.podcasttechnology.data.ui.ViewEpisode
 import com.nie.podcasttechnology.databinding.ActivityPodcastDetailBinding
 import com.nie.podcasttechnology.extension.throttleClick
 import com.nie.podcasttechnology.ui.audioplay.EpisodePlayerActivity
@@ -20,7 +20,7 @@ class EpisodeDetailActivity : BaseActivity() {
     companion object {
         private const val KEY_PODCAST_ITEM = "key_podcast_item"
 
-        fun start(activity: Activity, item: EntityEpisode) {
+        fun start(activity: Activity, item: ViewEpisode) {
             Intent(activity, EpisodeDetailActivity::class.java).apply {
                 putExtra(KEY_PODCAST_ITEM, item)
             }.let { activity.startActivity(it) }
@@ -31,7 +31,7 @@ class EpisodeDetailActivity : BaseActivity() {
 
     override val viewModel: BaseViewModel? = null
 
-    private val podcastItem by lazy { intent.getSerializableExtra(KEY_PODCAST_ITEM) as EntityEpisode }
+    private val podcastItem by lazy { intent.getSerializableExtra(KEY_PODCAST_ITEM) as ViewEpisode }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
