@@ -27,6 +27,9 @@ class EpisodeListViewModel(
     private val _coverImageUrl = MutableLiveData<String>()
     val coverImageUrl: LiveData<String> = _coverImageUrl
 
+    private val _serverError = MutableLiveData<Boolean>()
+    val serverError: LiveData<Boolean> = _serverError
+
     fun fetchEpisodes() {
         databaseRepository.clearAllDatabaseTables()
             .flatMap { episodeListRepository.fetchEpisodes() }
@@ -38,6 +41,7 @@ class EpisodeListViewModel(
             .doOnSubscribe { showLoading() }
             .doFinally { hideLoading() }
             .subscribe({ }, {
+                _serverError.value = true
                 Log.e(Constant.TAG, it.stackTraceToString())
             }).addTo(compositeDisposable)
     }

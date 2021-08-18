@@ -44,4 +44,9 @@ class DatabaseRepositoryImpl(
         return episodeDao.getNextEpisode(pubDate)
             .subscribeOn(Schedulers.io())
     }
+
+    override fun getLatestEpisode(): Single<List<EntityEpisode>> {
+        return episodeDao.getLatestEpisode()
+            .subscribeOn(Schedulers.io())
+    }
 }

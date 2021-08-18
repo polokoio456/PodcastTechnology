@@ -13,4 +13,5 @@ interface DatabaseRepository {
     fun insertEpisodes(episodes: List<EpisodeItem>): Completable
     fun listenEpisodesByDatePaging(): Flowable<PagingData<EntityEpisode>>
     fun getNextEpisode(pubDate: Date): Single<List<EntityEpisode>>
+    fun getLatestEpisode(): Single<List<EntityEpisode>>
 }

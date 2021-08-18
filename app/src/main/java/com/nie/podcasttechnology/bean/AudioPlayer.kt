@@ -66,7 +66,7 @@ class AudioPlayer : LifecycleObserver {
                     }
                 }
             }, {
-                it.printStackTrace()
+                Log.e(Constant.TAG, it.stackTraceToString())
             }).addTo(compositeDisposable)
     }
 
@@ -83,12 +83,14 @@ class AudioPlayer : LifecycleObserver {
         releasePlayer()
     }
 
-    fun resetPlayer(context: Context, pubDate: Date, url: String) {
+    fun resetPlayer(context: Context, pubDate: Date, url: String, isAutoStart: Boolean = true) {
         compositeDisposable.clear()
 
         currentPubData = pubDate
 
-        player = MediaPlayer()
+        if (player == null) {
+            player = MediaPlayer()
+        }
 
         player!!.setAudioAttributes(
             AudioAttributes.Builder()
@@ -108,11 +110,16 @@ class AudioPlayer : LifecycleObserver {
 
         player!!.setOnPreparedListener {
             isPrepared = true
-            playerSubject.onNext(AudioPlayerState.Prepare(it.duration))
-            startAudio()
 
-            player?.currentPosition?.let { currentPosition ->
-                playerSubject.onNext(AudioPlayerState.Playing(currentPosition))
+            if (isAutoStart) {
+                playerSubject.onNext(AudioPlayerState.Prepare(it.duration))
+                startAudio()
+
+                player?.currentPosition?.let { currentPosition ->
+                    playerSubject.onNext(AudioPlayerState.Playing(currentPosition))
+                }
+            } else {
+                playerSubject.onNext(AudioPlayerState.Paused)
             }
         }
 

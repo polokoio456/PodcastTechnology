@@ -66,4 +66,15 @@ class EpisodeListViewModelTest {
             databaseRepository.insertEpisodes(rss.channel.items)
         }
     }
+
+    @Test
+    fun fetchEpisodesFailed() {
+        every { databaseRepository.clearAllDatabaseTables() } returns Single.just(true)
+        every { mainRepository.fetchEpisodes() } returns Single.just(rss)
+        every { databaseRepository.insertEpisodes(rss.channel.items) } returns Completable.complete()
+
+        viewModel.fetchEpisodes()
+
+        assert(viewModel.serverError.value!!)
+    }
 }

@@ -16,6 +16,9 @@ class EpisodePlayerViewModel(private val databaseRepository: DatabaseRepository)
     private val _episode = MutableLiveData<List<ViewEpisode>>()
     val episode: LiveData<List<ViewEpisode>> = _episode
 
+    private val _latestEpisode = MutableLiveData<ViewEpisode>()
+    val latestEpisode: LiveData<ViewEpisode> = _latestEpisode
+
     fun getNextPodcast(pubDate: Date) {
         databaseRepository.getNextEpisode(pubDate)
             .map {
@@ -26,6 +29,17 @@ class EpisodePlayerViewModel(private val databaseRepository: DatabaseRepository)
             .observeOn(AndroidSchedulers.mainThread())
             .subscribe({
                 _episode.value = it
+            }, {
+                Log.e(Constant.TAG, it.stackTraceToString())
+            }).addTo(compositeDisposable)
+    }
+
+    fun getLatestEpisode() {
+        databaseRepository.getLatestEpisode()
+            .map { it.map { entity -> entity.toViewEpisode() } }
+            .observeOn(AndroidSchedulers.mainThread())
+            .subscribe({
+                _latestEpisode.value = it.first()
             }, {
                 Log.e(Constant.TAG, it.stackTraceToString())
             }).addTo(compositeDisposable)

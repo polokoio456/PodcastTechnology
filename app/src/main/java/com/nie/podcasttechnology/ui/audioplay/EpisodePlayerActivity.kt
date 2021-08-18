@@ -160,13 +160,17 @@ class EpisodePlayerActivity : BaseActivity() {
     private fun observableLiveData() {
         viewModel.episode.observe(this, {
             if (it.isEmpty()) {
-                audioPlayer.destroyAudio()
+                viewModel.getLatestEpisode()
                 return@observe
             }
 
             val episode = it.first()
             binding.textTitle.text = episode.title
             audioPlayer.resetPlayer(this, episode.pubDate, episode.audioUrl)
+        })
+
+        viewModel.latestEpisode.observe(this, {
+            audioPlayer.resetPlayer(this, it.pubDate, it.audioUrl, false)
         })
     }
 

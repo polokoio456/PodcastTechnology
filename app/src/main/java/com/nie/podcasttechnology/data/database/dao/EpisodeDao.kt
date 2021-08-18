@@ -19,6 +19,9 @@ interface EpisodeDao {
     @Query("SELECT * FROM Episodes WHERE pubDate > :pubDate ORDER BY pubDate ASC LIMIT 1")
     fun getNextEpisode(pubDate: Date): Single<List<EntityEpisode>>
 
+    @Query("SELECT * FROM Episodes ORDER BY pubDate DESC LIMIT 1")
+    fun getLatestEpisode(): Single<List<EntityEpisode>>
+
     @Query("DELETE FROM Episodes")
     fun nukeTable(): Single<Int>
 }

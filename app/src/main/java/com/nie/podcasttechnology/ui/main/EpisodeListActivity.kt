@@ -7,6 +7,7 @@ import com.nie.podcasttechnology.R
 import com.nie.podcasttechnology.base.BaseActivity
 import com.nie.podcasttechnology.databinding.ActivityMainBinding
 import com.nie.podcasttechnology.ui.detail.EpisodeDetailActivity
+import org.jetbrains.anko.toast
 import org.koin.android.ext.android.inject
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
@@ -57,6 +58,10 @@ class EpisodeListActivity : BaseActivity() {
 
         viewModel.episodes.observe(this, {
             adapter.submitData(lifecycle, it)
+        })
+
+        viewModel.serverError.observe(this, {
+            toast(R.string.server_error)
         })
     }
 }
