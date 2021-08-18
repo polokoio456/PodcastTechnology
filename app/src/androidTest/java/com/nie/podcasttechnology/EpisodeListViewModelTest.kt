@@ -13,7 +13,7 @@ import org.junit.Test
 class EpisodeListViewModelTest {
     private lateinit var viewModel: EpisodeListViewModel
 
-    private val mainRepository = mockk<EpisodeListRepository>(relaxed = true)
+    private val episodeListRepository = mockk<EpisodeListRepository>(relaxed = true)
     private val databaseRepository = mockk<DatabaseRepository>(relaxed = true)
 
     private val image = Image(
@@ -49,20 +49,20 @@ class EpisodeListViewModelTest {
     @Before
     fun setUp() {
         MockKAnnotations.init(this, relaxUnitFun = true)
-        viewModel = EpisodeListViewModel(mainRepository, databaseRepository)
+        viewModel = EpisodeListViewModel(episodeListRepository, databaseRepository)
     }
 
     @Test
     fun fetchEpisodes() {
         every { databaseRepository.clearAllDatabaseTables() } returns Single.just(true)
-        every { mainRepository.fetchEpisodes() } returns Single.just(rss)
+        every { episodeListRepository.fetchEpisodes() } returns Single.just(rss)
         every { databaseRepository.insertEpisodes(rss.channel.items) } returns Completable.complete()
 
         viewModel.fetchEpisodes()
 
         verifyOrder {
             databaseRepository.clearAllDatabaseTables()
-            mainRepository.fetchEpisodes()
+            episodeListRepository.fetchEpisodes()
             databaseRepository.insertEpisodes(rss.channel.items)
         }
     }
@@ -70,7 +70,7 @@ class EpisodeListViewModelTest {
     @Test
     fun fetchEpisodesFailed() {
         every { databaseRepository.clearAllDatabaseTables() } returns Single.just(true)
-        every { mainRepository.fetchEpisodes() } returns Single.just(rss)
+        every { episodeListRepository.fetchEpisodes() } returns Single.error(Throwable())
         every { databaseRepository.insertEpisodes(rss.channel.items) } returns Completable.complete()
 
         viewModel.fetchEpisodes()
