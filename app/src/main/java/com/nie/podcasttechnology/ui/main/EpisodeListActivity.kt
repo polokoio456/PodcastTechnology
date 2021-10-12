@@ -9,9 +9,11 @@ import com.nie.podcasttechnology.base.BaseActivity
 import com.nie.podcasttechnology.databinding.ActivityMainBinding
 import com.nie.podcasttechnology.ui.detail.EpisodeDetailActivity
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.FlowPreview
 import org.jetbrains.anko.toast
 import javax.inject.Inject
 
+@FlowPreview
 @AndroidEntryPoint
 class EpisodeListActivity : BaseActivity() {
 

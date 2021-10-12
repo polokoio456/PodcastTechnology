@@ -16,8 +16,12 @@ import dagger.hilt.android.lifecycle.HiltViewModel
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.rxkotlin.addTo
 import kotlinx.coroutines.ExperimentalCoroutinesApi
+import kotlinx.coroutines.FlowPreview
+import kotlinx.coroutines.flow.*
+import kotlinx.coroutines.launch
 import javax.inject.Inject
 
+@FlowPreview
 @HiltViewModel
 class EpisodeListViewModel @Inject constructor(
     private val episodeListRepository: EpisodeListRepository,
@@ -34,35 +38,29 @@ class EpisodeListViewModel @Inject constructor(
     val serverError: LiveData<Boolean> = _serverError
 
     fun fetchEpisodes() {
-        databaseRepository.clearAllDatabaseTables()
-            .flatMap { episodeListRepository.fetchEpisodes() }
-            .doOnSuccess {
-                _coverImageUrl.postValue(it.channel.image[0].imageUrl!!)
-            }
-            .flatMapCompletable { databaseRepository.insertEpisodes(it.channel.items) }
-            .observeOn(AndroidSchedulers.mainThread())
-            .doOnSubscribe { showLoading() }
-            .doFinally { hideLoading() }
-            .subscribe({ }, {
-                _serverError.value = true
-                Log.e(Constant.TAG, it.stackTraceToString())
-            }).addTo(compositeDisposable)
+        viewModelScope.launch {
+            databaseRepository.clearAllDatabaseTables()
+                .flatMapMerge { episodeListRepository.fetchEpisodes() }
+                .onEach { _coverImageUrl.postValue(it.channel.image[0].imageUrl!!) }
+                .flatMapMerge { databaseRepository.insertEpisodes(it.channel.items) }
+                .catch { e ->
+                    _serverError.value = true
+                    Log.e(Constant.TAG, e.stackTraceToString())
+                }
+                .collect()
+        }
     }
 
-    @OptIn(ExperimentalCoroutinesApi::class)
     fun listenEpisodes() {
-        databaseRepository.listenEpisodesByDatePaging()
-            .cachedIn(viewModelScope)
-            .map {
-                it.map { entity ->
-                    entity.toViewEpisode()
+        viewModelScope.launch {
+            databaseRepository.listenEpisodesByDatePaging()
+                .map { it.map { entity -> entity.toViewEpisode() } }
+                .catch { e ->
+                    Log.e(Constant.TAG, e.stackTraceToString())
                 }
-            }
-            .observeOn(AndroidSchedulers.mainThread())
-            .subscribe({
-                _episodes.value = it
-            }, {
-                Log.e(Constant.TAG, it.stackTraceToString())
-            }).addTo(compositeDisposable)
+                .collect {
+                    _episodes.value = it
+                }
+        }
     }
 }

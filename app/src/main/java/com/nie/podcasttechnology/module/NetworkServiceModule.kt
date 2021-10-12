@@ -1,7 +1,7 @@
 package com.nie.podcasttechnology.module
 
-import com.jakewharton.retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory
 import com.nie.podcasttechnology.data.remote.Api
+import com.nie.podcasttechnology.data.remote.adapter.FlowCallAdapterFactory
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -32,7 +32,7 @@ object NetworkServiceModule {
     @Singleton
     fun provideRetrofit(): Retrofit {
         return Retrofit.Builder()
-            .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
+            .addCallAdapterFactory(FlowCallAdapterFactory.create())
             .addConverterFactory(SimpleXmlConverterFactory.create())
             .baseUrl(DOMAIN_URL)
             .client(provideClient())

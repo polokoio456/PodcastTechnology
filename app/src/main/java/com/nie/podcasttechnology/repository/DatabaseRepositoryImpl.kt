@@ -12,7 +12,12 @@ import io.reactivex.Completable
 import io.reactivex.Flowable
 import io.reactivex.Single
 import io.reactivex.schedulers.Schedulers
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.ExperimentalCoroutinesApi
+import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.flow
+import kotlinx.coroutines.flow.flowOn
+import kotlinx.coroutines.flow.launchIn
 import java.util.*
 import javax.inject.Inject
 
@@ -21,33 +26,31 @@ class DatabaseRepositoryImpl @Inject constructor(
     private val episodeDao: EpisodeDao
 ) : DatabaseRepository {
 
-    override fun clearAllDatabaseTables(): Single<Boolean> {
-        return Single.create<Boolean> {
-            database.clearAllTables()
-            it.onSuccess(true)
-        }.subscribeOn(Schedulers.io())
-    }
+    override fun clearAllDatabaseTables() = flow {
+        database.clearAllTables()
+        emit(true)
+    }.flowOn(Dispatchers.IO)
 
-    override fun insertEpisodes(episodes: List<EpisodeItem>): Completable {
-        return episodeDao.insertEpisodes(episodes.map { EntityEpisode.from(it) })
-            .subscribeOn(Schedulers.io())
-    }
+    override fun insertEpisodes(episodes: List<EpisodeItem>) = flow {
+        episodeDao.insertEpisodes(episodes.map { EntityEpisode.from(it) })
+        emit(true)
+    }.flowOn(Dispatchers.IO)
 
     @OptIn(ExperimentalCoroutinesApi::class)
-    override fun listenEpisodesByDatePaging(): Flowable<PagingData<EntityEpisode>> {
+    override fun listenEpisodesByDatePaging(): Flow<PagingData<EntityEpisode>> {
         return Pager(
             config = PagingConfig(pageSize = 20, prefetchDistance = 10),
             pagingSourceFactory = { episodeDao.listenEpisodesByDate() }
-        ).flowable
+        ).flow.flowOn(Dispatchers.IO)
     }
 
-    override fun getNextEpisode(pubDate: Date): Single<List<EntityEpisode>> {
+    override fun getNextEpisode(pubDate: Date): Flow<List<EntityEpisode>> {
         return episodeDao.getNextEpisode(pubDate)
-            .subscribeOn(Schedulers.io())
+            .flowOn(Dispatchers.IO)
     }
 
-    override fun getLatestEpisode(): Single<List<EntityEpisode>> {
+    override fun getLatestEpisode(): Flow<List<EntityEpisode>> {
         return episodeDao.getLatestEpisode()
-            .subscribeOn(Schedulers.io())
+            .flowOn(Dispatchers.IO)
     }
 }

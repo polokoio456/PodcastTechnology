@@ -6,12 +6,13 @@ import com.nie.podcasttechnology.data.remote.model.EpisodeItem
 import io.reactivex.Completable
 import io.reactivex.Flowable
 import io.reactivex.Single
+import kotlinx.coroutines.flow.Flow
 import java.util.*
 
 interface DatabaseRepository {
-    fun clearAllDatabaseTables(): Single<Boolean>
-    fun insertEpisodes(episodes: List<EpisodeItem>): Completable
-    fun listenEpisodesByDatePaging(): Flowable<PagingData<EntityEpisode>>
-    fun getNextEpisode(pubDate: Date): Single<List<EntityEpisode>>
-    fun getLatestEpisode(): Single<List<EntityEpisode>>
+    fun clearAllDatabaseTables(): Flow<Boolean>
+    fun insertEpisodes(episodes: List<EpisodeItem>): Flow<Boolean>
+    fun listenEpisodesByDatePaging(): Flow<PagingData<EntityEpisode>>
+    fun getNextEpisode(pubDate: Date): Flow<List<EntityEpisode>>
+    fun getLatestEpisode(): Flow<List<EntityEpisode>>
 }
