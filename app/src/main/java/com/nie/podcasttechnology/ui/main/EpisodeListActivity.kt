@@ -1,23 +1,26 @@
 package com.nie.podcasttechnology.ui.main
 
 import android.os.Bundle
+import androidx.activity.viewModels
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.bumptech.glide.Glide
 import com.nie.podcasttechnology.R
 import com.nie.podcasttechnology.base.BaseActivity
 import com.nie.podcasttechnology.databinding.ActivityMainBinding
 import com.nie.podcasttechnology.ui.detail.EpisodeDetailActivity
+import dagger.hilt.android.AndroidEntryPoint
 import org.jetbrains.anko.toast
-import org.koin.android.ext.android.inject
-import org.koin.androidx.viewmodel.ext.android.viewModel
+import javax.inject.Inject
 
+@AndroidEntryPoint
 class EpisodeListActivity : BaseActivity() {
 
     private val binding by lazy { ActivityMainBinding.inflate(layoutInflater) }
 
-    override val viewModel by viewModel<EpisodeListViewModel>()
+    override val viewModel by viewModels<EpisodeListViewModel>()
 
-    private val adapter by inject<EpisodeAdapter>()
+    @Inject
+    lateinit var adapter: EpisodeAdapter
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

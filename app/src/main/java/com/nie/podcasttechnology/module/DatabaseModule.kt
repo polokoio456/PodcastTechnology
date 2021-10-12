@@ -1,10 +1,32 @@
 package com.nie.podcasttechnology.module
 
+import android.content.Context
+import androidx.room.Room
 import com.nie.podcasttechnology.data.database.PodcastTechnologyDatabase
-import org.koin.android.ext.koin.androidApplication
-import org.koin.dsl.module
+import com.nie.podcasttechnology.data.database.dao.EpisodeDao
+import dagger.Module
+import dagger.Provides
+import dagger.hilt.InstallIn
+import dagger.hilt.android.qualifiers.ApplicationContext
+import dagger.hilt.components.SingletonComponent
+import javax.inject.Singleton
 
-val databaseModule = module {
-    single { PodcastTechnologyDatabase.getInstance(androidApplication()) }
-    single { get<PodcastTechnologyDatabase>().episodeDao() }
+@Module
+@InstallIn(SingletonComponent::class)
+object DatabaseModule {
+
+    @Singleton
+    @Provides
+    fun provideDatabaseBuilder(@ApplicationContext context: Context): PodcastTechnologyDatabase {
+        return Room.databaseBuilder(
+            context,
+            PodcastTechnologyDatabase::class.java, "podcast.db"
+        ).build()
+    }
+
+    @Singleton
+    @Provides
+    fun provideEpisodeDao(podcastTechnologyDatabase: PodcastTechnologyDatabase): EpisodeDao {
+        return podcastTechnologyDatabase.episodeDao()
+    }
 }

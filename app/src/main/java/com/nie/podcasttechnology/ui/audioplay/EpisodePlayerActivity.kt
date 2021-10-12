@@ -4,6 +4,7 @@ import android.app.Activity
 import android.content.Intent
 import android.os.Bundle
 import android.widget.SeekBar
+import androidx.activity.viewModels
 import androidx.core.content.ContextCompat
 import com.bumptech.glide.Glide
 import com.jakewharton.rxbinding2.view.RxView
@@ -15,11 +16,12 @@ import com.nie.podcasttechnology.data.ui.ViewEpisode
 import com.nie.podcasttechnology.databinding.ActivityAudioPlayBinding
 import com.nie.podcasttechnology.extension.throttleClick
 import com.nie.podcasttechnology.extension.toFormatTimeStr
+import dagger.hilt.android.AndroidEntryPoint
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.rxkotlin.addTo
-import org.koin.android.ext.android.inject
-import org.koin.androidx.viewmodel.ext.android.viewModel
+import javax.inject.Inject
 
+@AndroidEntryPoint
 class EpisodePlayerActivity : BaseActivity() {
 
     companion object {
@@ -34,11 +36,12 @@ class EpisodePlayerActivity : BaseActivity() {
 
     private val binding by lazy { ActivityAudioPlayBinding.inflate(layoutInflater) }
 
-    override val viewModel by viewModel<EpisodePlayerViewModel>()
+    override val viewModel by viewModels<EpisodePlayerViewModel>()
 
     private val podcastItem by lazy { intent.getSerializableExtra(KEY_PODCAST_ITEM) as ViewEpisode }
 
-    private val audioPlayer by inject<AudioPlayer>()
+    @Inject
+    lateinit var audioPlayer: AudioPlayer
 
     private lateinit var audioState: AudioPlayerState
 
@@ -56,8 +59,8 @@ class EpisodePlayerActivity : BaseActivity() {
     }
 
     override fun onDestroy() {
-        super.onDestroy()
         lifecycle.removeObserver(audioPlayer)
+        super.onDestroy()
     }
 
     private fun initView() {

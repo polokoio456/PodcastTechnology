@@ -7,11 +7,16 @@ import com.nie.podcasttechnology.base.BaseViewModel
 import com.nie.podcasttechnology.data.ui.ViewEpisode
 import com.nie.podcasttechnology.repository.DatabaseRepository
 import com.nie.podcasttechnology.util.Constant
+import dagger.hilt.android.lifecycle.HiltViewModel
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.rxkotlin.addTo
 import java.util.*
+import javax.inject.Inject
 
-class EpisodePlayerViewModel(private val databaseRepository: DatabaseRepository) : BaseViewModel() {
+@HiltViewModel
+class EpisodePlayerViewModel @Inject constructor(
+    private val databaseRepository: DatabaseRepository
+) : BaseViewModel() {
 
     private val _episode = MutableLiveData<List<ViewEpisode>>()
     val episode: LiveData<List<ViewEpisode>> = _episode

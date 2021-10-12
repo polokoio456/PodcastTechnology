@@ -14,8 +14,9 @@ import io.reactivex.Single
 import io.reactivex.schedulers.Schedulers
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import java.util.*
+import javax.inject.Inject
 
-class DatabaseRepositoryImpl(
+class DatabaseRepositoryImpl @Inject constructor(
     private val database: PodcastTechnologyDatabase,
     private val episodeDao: EpisodeDao
 ) : DatabaseRepository {

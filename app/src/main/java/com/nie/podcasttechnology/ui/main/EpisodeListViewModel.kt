@@ -12,11 +12,14 @@ import com.nie.podcasttechnology.data.ui.ViewEpisode
 import com.nie.podcasttechnology.repository.DatabaseRepository
 import com.nie.podcasttechnology.repository.EpisodeListRepository
 import com.nie.podcasttechnology.util.Constant
+import dagger.hilt.android.lifecycle.HiltViewModel
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.rxkotlin.addTo
 import kotlinx.coroutines.ExperimentalCoroutinesApi
+import javax.inject.Inject
 
-class EpisodeListViewModel(
+@HiltViewModel
+class EpisodeListViewModel @Inject constructor(
     private val episodeListRepository: EpisodeListRepository,
     private val databaseRepository: DatabaseRepository
 ) : BaseViewModel() {
