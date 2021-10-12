@@ -1,3 +1,3 @@
 # PodcastTechnology
-## DI - Hilt
-## Asynchronize Framwork - Coroutines Flow
+- DI -> Hilt
+- Asynchronize Framwork -> Coroutines Flow
