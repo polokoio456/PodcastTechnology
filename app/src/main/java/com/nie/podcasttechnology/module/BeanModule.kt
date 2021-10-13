@@ -1,4 +1,4 @@
-package com.nie.podcasttechnology.ui.audioplay.module
+package com.nie.podcasttechnology.module
 
 import com.nie.podcasttechnology.bean.AudioPlayer
 import dagger.Module
@@ -9,7 +9,7 @@ import javax.inject.Singleton
 
 @Module
 @InstallIn(SingletonComponent::class)
-object EpisodePlayerActivityModule {
+object BeanModule {
 
     @Provides
     @Singleton
