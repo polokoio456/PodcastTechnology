@@ -14,9 +14,11 @@ import javax.inject.Singleton
 
 @Module
 @InstallIn(SingletonComponent::class)
-object NetworkServiceModule {
-    private const val TIMEOUT_SECOND = 60L
-    private const val DOMAIN_URL = "https://feeds.soundcloud.com/"
+class NetworkServiceModule {
+    companion object {
+        private const val TIMEOUT_SECOND = 60L
+        private const val DOMAIN_URL = "https://feeds.soundcloud.com/"
+    }
 
     @Provides
     @Singleton
