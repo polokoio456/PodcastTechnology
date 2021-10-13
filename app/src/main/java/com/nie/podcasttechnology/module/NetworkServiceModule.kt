@@ -30,12 +30,12 @@ object NetworkServiceModule {
 
     @Provides
     @Singleton
-    fun provideRetrofit(): Retrofit {
+    fun provideRetrofit(okHttpClient: OkHttpClient): Retrofit {
         return Retrofit.Builder()
             .addCallAdapterFactory(FlowCallAdapterFactory.create())
             .addConverterFactory(SimpleXmlConverterFactory.create())
             .baseUrl(DOMAIN_URL)
-            .client(provideClient())
+            .client(okHttpClient)
             .build()
     }
 
