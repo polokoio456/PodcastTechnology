@@ -31,7 +31,7 @@ object NetworkServiceModule {
     @GeneralOkHttpClient
     @Provides
     @Singleton
-    fun provideClient(): OkHttpClient {
+    fun provideGeneralOkHttpClient(): OkHttpClient {
         return OkHttpClient.Builder()
             .connectTimeout(TIMEOUT_SECOND, TimeUnit.SECONDS)
             .readTimeout(TIMEOUT_SECOND, TimeUnit.SECONDS)
