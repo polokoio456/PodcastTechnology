@@ -16,7 +16,7 @@ import javax.inject.Singleton
 
 @Qualifier
 @Retention(AnnotationRetention.BINARY)
-annotation class LoggingInterceptorOkHttpClient
+annotation class LoggingOkHttpClient
 
 @Qualifier
 @Retention(AnnotationRetention.BINARY)
@@ -39,7 +39,7 @@ object NetworkServiceModule {
             .build()
     }
 
-    @LoggingInterceptorOkHttpClient
+    @LoggingOkHttpClient
     @Provides
     @Singleton
     fun provideLoggingOkHttpClient(): OkHttpClient {
@@ -58,7 +58,7 @@ object NetworkServiceModule {
     @Provides
     @Singleton
     fun provideRetrofit(
-        @LoggingInterceptorOkHttpClient okHttpClient: OkHttpClient
+        @LoggingOkHttpClient okHttpClient: OkHttpClient
     ): Retrofit {
         return Retrofit.Builder()
             .addCallAdapterFactory(FlowCallAdapterFactory.create())
