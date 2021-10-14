@@ -9,8 +9,6 @@ import com.nie.podcasttechnology.data.ui.ViewEpisode
 import com.nie.podcasttechnology.repository.DatabaseRepository
 import com.nie.podcasttechnology.util.Constant
 import dagger.hilt.android.lifecycle.HiltViewModel
-import io.reactivex.android.schedulers.AndroidSchedulers
-import io.reactivex.rxkotlin.addTo
 import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.flow.map

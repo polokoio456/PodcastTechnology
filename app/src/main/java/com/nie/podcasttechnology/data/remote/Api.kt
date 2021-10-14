@@ -1,7 +1,6 @@
 package com.nie.podcasttechnology.data.remote
 
 import com.nie.podcasttechnology.data.remote.model.Rss
-import io.reactivex.Single
 import kotlinx.coroutines.flow.Flow
 import retrofit2.http.GET
 

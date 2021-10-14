@@ -3,8 +3,6 @@ package com.nie.podcasttechnology.data.database.dao
 import androidx.paging.PagingSource
 import androidx.room.*
 import com.nie.podcasttechnology.data.database.model.EntityEpisode
-import io.reactivex.Completable
-import io.reactivex.Single
 import kotlinx.coroutines.flow.Flow
 import java.util.*
 
