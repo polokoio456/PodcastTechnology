@@ -7,19 +7,28 @@ import dagger.Provides
 import dagger.hilt.InstallIn
 import dagger.hilt.components.SingletonComponent
 import okhttp3.OkHttpClient
+import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit
 import retrofit2.converter.simplexml.SimpleXmlConverterFactory
 import java.util.concurrent.TimeUnit
+import javax.inject.Qualifier
 import javax.inject.Singleton
+
+@Qualifier
+@Retention(AnnotationRetention.BINARY)
+annotation class LoggingInterceptorOkHttpClient
+
+@Qualifier
+@Retention(AnnotationRetention.BINARY)
+annotation class GeneralOkHttpClient
 
 @Module
 @InstallIn(SingletonComponent::class)
-class NetworkServiceModule {
-    companion object {
-        private const val TIMEOUT_SECOND = 60L
-        private const val DOMAIN_URL = "https://feeds.soundcloud.com/"
-    }
+object NetworkServiceModule {
+    private const val TIMEOUT_SECOND = 60L
+    private const val DOMAIN_URL = "https://feeds.soundcloud.com/"
 
+    @GeneralOkHttpClient
     @Provides
     @Singleton
     fun provideClient(): OkHttpClient {
@@ -30,9 +39,27 @@ class NetworkServiceModule {
             .build()
     }
 
+    @LoggingInterceptorOkHttpClient
     @Provides
     @Singleton
-    fun provideRetrofit(okHttpClient: OkHttpClient): Retrofit {
+    fun provideLoggingOkHttpClient(): OkHttpClient {
+        val loggingInterceptor = HttpLoggingInterceptor().apply {
+            level = HttpLoggingInterceptor.Level.BODY
+        }
+
+        return OkHttpClient.Builder()
+            .addInterceptor(loggingInterceptor)
+            .connectTimeout(TIMEOUT_SECOND, TimeUnit.SECONDS)
+            .readTimeout(TIMEOUT_SECOND, TimeUnit.SECONDS)
+            .writeTimeout(TIMEOUT_SECOND, TimeUnit.SECONDS)
+            .build()
+    }
+
+    @Provides
+    @Singleton
+    fun provideRetrofit(
+        @LoggingInterceptorOkHttpClient okHttpClient: OkHttpClient
+    ): Retrofit {
         return Retrofit.Builder()
             .addCallAdapterFactory(FlowCallAdapterFactory.create())
             .addConverterFactory(SimpleXmlConverterFactory.create())

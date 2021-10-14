@@ -8,7 +8,7 @@ import dagger.hilt.android.components.ActivityComponent
 
 @Module
 @InstallIn(ActivityComponent::class)
-class EpisodeListActivityModule {
+object EpisodeListActivityModule {
 
     @Provides
     fun provideEpisodeAdapter() : EpisodeAdapter {
