@@ -11,10 +11,7 @@ import com.nie.podcasttechnology.data.remote.model.EpisodeItem
 import com.nie.podcasttechnology.data.ui.ViewEpisode
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.FlowPreview
-import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.flow.flatMapMerge
-import kotlinx.coroutines.flow.flow
-import kotlinx.coroutines.flow.flowOn
+import kotlinx.coroutines.flow.*
 import java.util.*
 import javax.inject.Inject
 
@@ -38,25 +35,23 @@ class DatabaseRepositoryImpl @Inject constructor(
         return Pager(
             config = PagingConfig(pageSize = 20, prefetchDistance = 10),
             pagingSourceFactory = { episodeDao.listenEpisodesByDate() }
-        ).flow.flowOn(Dispatchers.IO)
-            .flatMapMerge {
-                flow { emit(it.map { entity -> entity.toViewEpisode() }) }
-            }.flowOn(Dispatchers.IO)
+        ).flow
+            .flowOn(Dispatchers.IO)
+            .map { it.map { entity -> entity.toViewEpisode() } }
+            .flowOn(Dispatchers.IO)
     }
 
     override fun getNextEpisode(pubDate: Date): Flow<List<ViewEpisode>> {
         return episodeDao.getNextEpisode(pubDate)
             .flowOn(Dispatchers.IO)
-            .flatMapMerge {
-                flow { emit(it.map { entity -> entity.toViewEpisode() }) }
-            }.flowOn(Dispatchers.IO)
+            .map { it.map { entity -> entity.toViewEpisode() } }
+            .flowOn(Dispatchers.IO)
     }
 
     override fun getLatestEpisode(): Flow<List<ViewEpisode>> {
         return episodeDao.getLatestEpisode()
             .flowOn(Dispatchers.IO)
-            .flatMapMerge {
-                flow { emit(it.map { entity -> entity.toViewEpisode() }) }
-            }.flowOn(Dispatchers.IO)
+            .map { it.map { entity -> entity.toViewEpisode() } }
+            .flowOn(Dispatchers.IO)
     }
 }
