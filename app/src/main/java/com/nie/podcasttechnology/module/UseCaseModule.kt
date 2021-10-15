@@ -1,6 +1,7 @@
 package com.nie.podcasttechnology.module
 
 import com.nie.podcasttechnology.domain.EpisodeListUseCase
+import com.nie.podcasttechnology.domain.EpisodePlayerUseCase
 import com.nie.podcasttechnology.repository.DatabaseRepository
 import com.nie.podcasttechnology.repository.EpisodeListRepository
 import dagger.Module
@@ -19,5 +20,11 @@ object UseCaseModule {
     @Provides
     fun provideEpisodeListUseCase(databaseRepository: DatabaseRepository, episodeListRepository: EpisodeListRepository): EpisodeListUseCase {
         return EpisodeListUseCase(episodeListRepository, databaseRepository)
+    }
+
+    @Singleton
+    @Provides
+    fun provideEpisodePlayerUseCase(databaseRepository: DatabaseRepository): EpisodePlayerUseCase {
+        return EpisodePlayerUseCase(databaseRepository)
     }
 }

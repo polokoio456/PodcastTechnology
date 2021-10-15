@@ -6,7 +6,7 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
 import com.nie.podcasttechnology.base.BaseViewModel
 import com.nie.podcasttechnology.data.ui.ViewEpisode
-import com.nie.podcasttechnology.repository.DatabaseRepository
+import com.nie.podcasttechnology.domain.EpisodePlayerUseCase
 import com.nie.podcasttechnology.util.Constant
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.catch
@@ -17,7 +17,7 @@ import javax.inject.Inject
 
 @HiltViewModel
 class EpisodePlayerViewModel @Inject constructor(
-    private val databaseRepository: DatabaseRepository
+    private val episodePlayerUseCase: EpisodePlayerUseCase
 ) : BaseViewModel() {
 
     private val _episode = MutableLiveData<List<ViewEpisode>>()
@@ -28,7 +28,7 @@ class EpisodePlayerViewModel @Inject constructor(
 
     fun getNextPodcast(pubDate: Date) {
         viewModelScope.launch {
-            databaseRepository.getNextEpisode(pubDate)
+            episodePlayerUseCase.getNextEpisode(pubDate)
                 .catch { e -> Log.e(Constant.TAG, e.stackTraceToString()) }
                 .collect {
                     _episode.value = it
@@ -38,7 +38,7 @@ class EpisodePlayerViewModel @Inject constructor(
 
     fun getLatestEpisode() {
         viewModelScope.launch {
-            databaseRepository.getLatestEpisode()
+            episodePlayerUseCase.getLatestEpisode()
                 .catch { e -> Log.e(Constant.TAG, e.stackTraceToString()) }
                 .collect {
                     _latestEpisode.value = it.first()

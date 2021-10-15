@@ -47,9 +47,7 @@ class EpisodeListViewModel @Inject constructor(
     fun listenEpisodes() {
         viewModelScope.launch {
             episodeListUseCase.listenEpisodesByDatePaging()
-                .catch { e ->
-                    Log.e(Constant.TAG, e.stackTraceToString())
-                }
+                .catch { e -> Log.e(Constant.TAG, e.stackTraceToString()) }
                 .collect {
                     _episodes.value = it
                 }
