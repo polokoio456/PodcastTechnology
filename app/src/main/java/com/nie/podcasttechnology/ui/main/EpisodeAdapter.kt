@@ -10,11 +10,11 @@ import com.jakewharton.rxbinding2.view.RxView
 import com.nie.podcasttechnology.R
 import com.nie.podcasttechnology.data.ui.ViewEpisode
 import com.nie.podcasttechnology.databinding.ItemPodcastBinding
+import com.nie.podcasttechnology.extension.addTo
 import com.nie.podcasttechnology.extension.throttleClick
 import com.nie.podcasttechnology.extension.toDateString
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.CompositeDisposable
-import io.reactivex.rxkotlin.addTo
 
 class EpisodeAdapter : PagingDataAdapter<ViewEpisode, EpisodeAdapter.PodcastViewHolder>(COMPARATOR) {
 

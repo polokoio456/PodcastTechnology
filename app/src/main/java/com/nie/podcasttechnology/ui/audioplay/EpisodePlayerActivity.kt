@@ -14,11 +14,11 @@ import com.nie.podcasttechnology.bean.AudioPlayer
 import com.nie.podcasttechnology.bean.AudioPlayerState
 import com.nie.podcasttechnology.data.ui.ViewEpisode
 import com.nie.podcasttechnology.databinding.ActivityAudioPlayBinding
+import com.nie.podcasttechnology.extension.addTo
 import com.nie.podcasttechnology.extension.throttleClick
 import com.nie.podcasttechnology.extension.toFormatTimeStr
 import dagger.hilt.android.AndroidEntryPoint
 import io.reactivex.android.schedulers.AndroidSchedulers
-import io.reactivex.rxkotlin.addTo
 import javax.inject.Inject
 
 @AndroidEntryPoint

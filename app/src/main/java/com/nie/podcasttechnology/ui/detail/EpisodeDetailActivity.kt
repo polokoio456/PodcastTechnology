@@ -10,10 +10,12 @@ import com.nie.podcasttechnology.base.BaseActivity
 import com.nie.podcasttechnology.base.BaseViewModel
 import com.nie.podcasttechnology.data.ui.ViewEpisode
 import com.nie.podcasttechnology.databinding.ActivityPodcastDetailBinding
+import com.nie.podcasttechnology.extension.addTo
 import com.nie.podcasttechnology.extension.throttleClick
 import com.nie.podcasttechnology.ui.audioplay.EpisodePlayerActivity
 import io.reactivex.android.schedulers.AndroidSchedulers
-import io.reactivex.rxkotlin.addTo
+import io.reactivex.disposables.CompositeDisposable
+import io.reactivex.disposables.Disposable
 
 class EpisodeDetailActivity : BaseActivity() {
 
