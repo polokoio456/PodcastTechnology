@@ -2,6 +2,7 @@ package com.nie.podcasttechnology.domain
 
 import androidx.paging.PagingData
 import com.nie.podcasttechnology.data.database.model.EntityEpisode
+import com.nie.podcasttechnology.data.ui.ViewEpisode
 import com.nie.podcasttechnology.repository.DatabaseRepository
 import com.nie.podcasttechnology.repository.EpisodeListRepository
 import kotlinx.coroutines.FlowPreview
@@ -25,7 +26,7 @@ class EpisodeListUseCase(
             .flatMapMerge { flowOf(imageUrl) }
     }
 
-    fun listenEpisodesByDatePaging(): Flow<PagingData<EntityEpisode>> {
+    fun listenEpisodesByDatePaging(): Flow<PagingData<ViewEpisode>> {
         return databaseRepository.listenEpisodesByDatePaging()
     }
 }

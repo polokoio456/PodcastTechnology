@@ -31,11 +31,6 @@ class EpisodePlayerViewModel @Inject constructor(
         viewModelScope.launch {
             databaseRepository.getNextEpisode(pubDate)
                 .catch { e -> Log.e(Constant.TAG, e.stackTraceToString()) }
-                .map {
-                    it.map { entity ->
-                        entity.toViewEpisode()
-                    }
-                }
                 .collect {
                     _episode.value = it
                 }
@@ -45,7 +40,6 @@ class EpisodePlayerViewModel @Inject constructor(
     fun getLatestEpisode() {
         viewModelScope.launch {
             databaseRepository.getLatestEpisode()
-                .map { it.map { entity -> entity.toViewEpisode() } }
                 .catch { e -> Log.e(Constant.TAG, e.stackTraceToString()) }
                 .collect {
                     _latestEpisode.value = it.first()

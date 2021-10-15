@@ -13,10 +13,7 @@ import com.nie.podcasttechnology.util.Constant
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.FlowPreview
-import kotlinx.coroutines.flow.catch
-import kotlinx.coroutines.flow.collect
-import kotlinx.coroutines.flow.flowOn
-import kotlinx.coroutines.flow.map
+import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
@@ -51,8 +48,6 @@ class EpisodeListViewModel @Inject constructor(
     fun listenEpisodes() {
         viewModelScope.launch {
             episodeListUseCase.listenEpisodesByDatePaging()
-                .map { it.map { entity -> entity.toViewEpisode() } }
-                .flowOn(Dispatchers.IO)
                 .catch { e ->
                     Log.e(Constant.TAG, e.stackTraceToString())
                 }

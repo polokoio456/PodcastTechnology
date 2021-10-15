@@ -58,7 +58,7 @@ object NetworkServiceModule {
     @Provides
     @Singleton
     fun provideRetrofit(
-        @LoggingOkHttpClient okHttpClient: OkHttpClient
+        @GeneralOkHttpClient okHttpClient: OkHttpClient
     ): Retrofit {
         return Retrofit.Builder()
             .addCallAdapterFactory(FlowCallAdapterFactory.create())
