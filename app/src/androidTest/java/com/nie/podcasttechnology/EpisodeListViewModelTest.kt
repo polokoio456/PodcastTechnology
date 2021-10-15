@@ -1,17 +1,22 @@
 package com.nie.podcasttechnology
 
 import com.nie.podcasttechnology.data.remote.model.*
+import com.nie.podcasttechnology.domain.EpisodeListUseCase
 import com.nie.podcasttechnology.repository.DatabaseRepository
 import com.nie.podcasttechnology.repository.EpisodeListRepository
-import com.nie.podcasttechnology.ui.main.EpisodeListViewModel
 import io.mockk.*
-import io.reactivex.Completable
-import io.reactivex.Single
+import kotlinx.coroutines.FlowPreview
+import kotlinx.coroutines.flow.catch
+import kotlinx.coroutines.flow.collect
+import kotlinx.coroutines.flow.flow
+import kotlinx.coroutines.flow.flowOf
+import kotlinx.coroutines.runBlocking
 import org.junit.Before
 import org.junit.Test
 
+@FlowPreview
 class EpisodeListViewModelTest {
-    private lateinit var viewModel: EpisodeListViewModel
+    private lateinit var episodeListUseCase: EpisodeListUseCase
 
     private val episodeListRepository = mockk<EpisodeListRepository>(relaxed = true)
     private val databaseRepository = mockk<DatabaseRepository>(relaxed = true)
@@ -49,16 +54,17 @@ class EpisodeListViewModelTest {
     @Before
     fun setUp() {
         MockKAnnotations.init(this, relaxUnitFun = true)
-        viewModel = EpisodeListViewModel(episodeListRepository, databaseRepository)
+        episodeListUseCase = EpisodeListUseCase(episodeListRepository, databaseRepository)
     }
 
     @Test
-    fun fetchEpisodes() {
-        every { databaseRepository.clearAllDatabaseTables() } returns Single.just(true)
-        every { episodeListRepository.fetchEpisodes() } returns Single.just(rss)
-        every { databaseRepository.insertEpisodes(rss.channel.items) } returns Completable.complete()
+    fun fetchEpisodes() = runBlocking {
+        every { databaseRepository.clearAllDatabaseTables() } returns flowOf(true)
+        every { episodeListRepository.fetchEpisodes() } returns flowOf(rss)
+        every { databaseRepository.insertEpisodes(rss.channel.items) } returns flowOf(true)
 
-        viewModel.fetchEpisodes()
+        episodeListUseCase.fetchEpisodes()
+            .collect()
 
         verifyOrder {
             databaseRepository.clearAllDatabaseTables()
@@ -68,13 +74,19 @@ class EpisodeListViewModelTest {
     }
 
     @Test
-    fun fetchEpisodesFailed() {
-        every { databaseRepository.clearAllDatabaseTables() } returns Single.just(true)
-        every { episodeListRepository.fetchEpisodes() } returns Single.error(Throwable())
-        every { databaseRepository.insertEpisodes(rss.channel.items) } returns Completable.complete()
+    fun fetchEpisodesFailed() = runBlocking {
+        every { databaseRepository.clearAllDatabaseTables() } returns flowOf(true)
+        every { episodeListRepository.fetchEpisodes() } returns flow { throw Exception() }
+        every { databaseRepository.insertEpisodes(rss.channel.items) } returns flowOf(true)
 
-        viewModel.fetchEpisodes()
+        var isError = false
 
-        assert(viewModel.serverError.value!!)
+        episodeListUseCase.fetchEpisodes()
+            .catch { e ->
+                isError = true
+            }
+            .collect()
+
+        assert(isError)
     }
 }
