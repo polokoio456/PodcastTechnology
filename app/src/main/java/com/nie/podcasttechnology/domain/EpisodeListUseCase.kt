@@ -1,7 +1,6 @@
 package com.nie.podcasttechnology.domain
 
 import androidx.paging.PagingData
-import com.nie.podcasttechnology.data.database.model.EntityEpisode
 import com.nie.podcasttechnology.data.ui.ViewEpisode
 import com.nie.podcasttechnology.repository.DatabaseRepository
 import com.nie.podcasttechnology.repository.EpisodeListRepository

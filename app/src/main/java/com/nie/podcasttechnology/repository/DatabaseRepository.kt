@@ -1,7 +1,6 @@
 package com.nie.podcasttechnology.repository
 
 import androidx.paging.PagingData
-import com.nie.podcasttechnology.data.database.model.EntityEpisode
 import com.nie.podcasttechnology.data.remote.model.EpisodeItem
 import com.nie.podcasttechnology.data.ui.ViewEpisode
 import kotlinx.coroutines.flow.Flow

@@ -1,7 +1,5 @@
 package com.nie.podcasttechnology.repository
 
-import android.util.Log
-import android.view.View
 import androidx.paging.Pager
 import androidx.paging.PagingConfig
 import androidx.paging.PagingData
@@ -11,10 +9,12 @@ import com.nie.podcasttechnology.data.database.dao.EpisodeDao
 import com.nie.podcasttechnology.data.database.model.EntityEpisode
 import com.nie.podcasttechnology.data.remote.model.EpisodeItem
 import com.nie.podcasttechnology.data.ui.ViewEpisode
-import com.nie.podcasttechnology.util.Constant
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.FlowPreview
-import kotlinx.coroutines.flow.*
+import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.flatMapMerge
+import kotlinx.coroutines.flow.flow
+import kotlinx.coroutines.flow.flowOn
 import java.util.*
 import javax.inject.Inject
 
