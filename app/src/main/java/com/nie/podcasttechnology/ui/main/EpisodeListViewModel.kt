@@ -34,17 +34,15 @@ class EpisodeListViewModel @Inject constructor(
     val serverError: LiveData<Boolean> = _serverError
 
     fun fetchEpisodes() {
-        viewModelScope.launch {
-            databaseRepository.clearAllDatabaseTables()
-                .flatMapMerge { episodeListRepository.fetchEpisodes() }
-                .onEach { _coverImageUrl.postValue(it.channel.image[0].imageUrl!!) }
-                .flatMapMerge { databaseRepository.insertEpisodes(it.channel.items) }
-                .catch { e ->
-                    _serverError.value = true
-                    Log.e(Constant.TAG, e.stackTraceToString())
-                }
-                .collect()
-        }
+        databaseRepository.clearAllDatabaseTables()
+            .flatMapMerge { episodeListRepository.fetchEpisodes() }
+            .onEach { _coverImageUrl.postValue(it.channel.image[0].imageUrl!!) }
+            .flatMapMerge { databaseRepository.insertEpisodes(it.channel.items) }
+            .catch { e ->
+                _serverError.value = true
+                Log.e(Constant.TAG, e.stackTraceToString())
+            }
+            .launchIn(viewModelScope)
     }
 
     fun listenEpisodes() {
