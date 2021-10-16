@@ -11,8 +11,8 @@ import javax.inject.Singleton
 @InstallIn(SingletonComponent::class)
 object BeanModule {
 
-    @Provides
     @Singleton
+    @Provides
     fun provideAudioPlayer(): AudioPlayer {
         return AudioPlayer()
     }

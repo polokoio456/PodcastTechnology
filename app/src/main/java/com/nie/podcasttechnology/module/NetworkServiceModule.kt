@@ -29,8 +29,8 @@ object NetworkServiceModule {
     private const val DOMAIN_URL = "https://feeds.soundcloud.com/"
 
     @GeneralOkHttpClient
-    @Provides
     @Singleton
+    @Provides
     fun provideGeneralOkHttpClient(): OkHttpClient {
         return OkHttpClient.Builder()
             .connectTimeout(TIMEOUT_SECOND, TimeUnit.SECONDS)
@@ -40,8 +40,8 @@ object NetworkServiceModule {
     }
 
     @LoggingOkHttpClient
-    @Provides
     @Singleton
+    @Provides
     fun provideLoggingOkHttpClient(): OkHttpClient {
         val loggingInterceptor = HttpLoggingInterceptor().apply {
             level = HttpLoggingInterceptor.Level.BODY
@@ -55,8 +55,8 @@ object NetworkServiceModule {
             .build()
     }
 
-    @Provides
     @Singleton
+    @Provides
     fun provideRetrofit(
         @GeneralOkHttpClient okHttpClient: OkHttpClient
     ): Retrofit {
@@ -68,8 +68,8 @@ object NetworkServiceModule {
             .build()
     }
 
-    @Provides
     @Singleton
+    @Provides
     fun provideApiService(retrofit: Retrofit): Api {
         return retrofit.create(Api::class.java)
     }
