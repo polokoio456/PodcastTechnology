@@ -17,7 +17,7 @@ object DatabaseModule {
 
     @Singleton
     @Provides
-    fun provideDatabaseBuilder(@ApplicationContext context: Context): PodcastTechnologyDatabase {
+    fun provideDatabase(@ApplicationContext context: Context): PodcastTechnologyDatabase {
         return Room.databaseBuilder(
             context,
             PodcastTechnologyDatabase::class.java, "podcast.db"
