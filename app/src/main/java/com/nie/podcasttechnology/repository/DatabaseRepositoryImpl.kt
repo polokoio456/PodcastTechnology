@@ -35,8 +35,7 @@ class DatabaseRepositoryImpl @Inject constructor(
         return Pager(
             config = PagingConfig(pageSize = 20, prefetchDistance = 10),
             pagingSourceFactory = { episodeDao.listenEpisodesByDate() }
-        ).flow
-            .flowOn(Dispatchers.IO)
+        ).flow.flowOn(Dispatchers.IO)
             .map { it.map { entity -> entity.toViewEpisode() } }
             .flowOn(Dispatchers.IO)
     }
