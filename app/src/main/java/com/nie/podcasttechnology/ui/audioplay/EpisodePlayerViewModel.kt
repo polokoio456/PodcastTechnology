@@ -8,15 +8,12 @@ import com.nie.podcasttechnology.base.BaseViewModel
 import com.nie.podcasttechnology.data.ui.ViewEpisode
 import com.nie.podcasttechnology.domain.EpisodePlayerUseCase
 import com.nie.podcasttechnology.util.Constant
-import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
 import java.util.*
-import javax.inject.Inject
 
-@HiltViewModel
-class EpisodePlayerViewModel @Inject constructor(
+class EpisodePlayerViewModel (
     private val episodePlayerUseCase: EpisodePlayerUseCase
 ) : BaseViewModel() {
 

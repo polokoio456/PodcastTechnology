@@ -11,12 +11,14 @@ import com.nie.podcasttechnology.data.remote.model.EpisodeItem
 import com.nie.podcasttechnology.data.ui.ViewEpisode
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.FlowPreview
-import kotlinx.coroutines.flow.*
+import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.flow
+import kotlinx.coroutines.flow.flowOn
+import kotlinx.coroutines.flow.map
 import java.util.*
-import javax.inject.Inject
 
 @FlowPreview
-class DatabaseRepositoryImpl @Inject constructor(
+class DatabaseRepositoryImpl(
     private val database: PodcastTechnologyDatabase,
     private val episodeDao: EpisodeDao
 ) : DatabaseRepository {

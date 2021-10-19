@@ -1,19 +1,8 @@
 package com.nie.podcasttechnology.module
 
 import com.nie.podcasttechnology.bean.AudioPlayer
-import dagger.Module
-import dagger.Provides
-import dagger.hilt.InstallIn
-import dagger.hilt.components.SingletonComponent
-import javax.inject.Singleton
+import org.koin.dsl.module
 
-@Module
-@InstallIn(SingletonComponent::class)
-object BeanModule {
-
-    @Singleton
-    @Provides
-    fun provideAudioPlayer(): AudioPlayer {
-        return AudioPlayer()
-    }
+val beanModule = module {
+    single { AudioPlayer() }
 }

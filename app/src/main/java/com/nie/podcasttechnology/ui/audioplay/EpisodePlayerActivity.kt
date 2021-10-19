@@ -4,7 +4,6 @@ import android.app.Activity
 import android.content.Intent
 import android.os.Bundle
 import android.widget.SeekBar
-import androidx.activity.viewModels
 import androidx.core.content.ContextCompat
 import com.bumptech.glide.Glide
 import com.jakewharton.rxbinding2.view.RxView
@@ -17,11 +16,10 @@ import com.nie.podcasttechnology.databinding.ActivityAudioPlayBinding
 import com.nie.podcasttechnology.extension.addTo
 import com.nie.podcasttechnology.extension.throttleClick
 import com.nie.podcasttechnology.extension.toFormatTimeStr
-import dagger.hilt.android.AndroidEntryPoint
 import io.reactivex.android.schedulers.AndroidSchedulers
-import javax.inject.Inject
+import org.koin.android.ext.android.inject
+import org.koin.androidx.viewmodel.ext.android.viewModel
 
-@AndroidEntryPoint
 class EpisodePlayerActivity : BaseActivity() {
 
     companion object {
@@ -36,12 +34,11 @@ class EpisodePlayerActivity : BaseActivity() {
 
     private val binding by lazy { ActivityAudioPlayBinding.inflate(layoutInflater) }
 
-    override val viewModel by viewModels<EpisodePlayerViewModel>()
+    override val viewModel by viewModel<EpisodePlayerViewModel>()
 
     private val podcastItem by lazy { intent.getSerializableExtra(KEY_PODCAST_ITEM) as ViewEpisode }
 
-    @Inject
-    lateinit var audioPlayer: AudioPlayer
+    private val audioPlayer by inject<AudioPlayer>()
 
     private lateinit var audioState: AudioPlayerState
 

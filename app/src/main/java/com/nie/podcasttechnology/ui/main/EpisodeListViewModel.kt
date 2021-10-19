@@ -9,16 +9,13 @@ import com.nie.podcasttechnology.base.BaseViewModel
 import com.nie.podcasttechnology.data.ui.ViewEpisode
 import com.nie.podcasttechnology.domain.EpisodeListUseCase
 import com.nie.podcasttechnology.util.Constant
-import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.FlowPreview
 import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
-import javax.inject.Inject
 
 @FlowPreview
-@HiltViewModel
-class EpisodeListViewModel @Inject constructor(
+class EpisodeListViewModel (
     private val episodeListUseCase: EpisodeListUseCase
 ) : BaseViewModel() {
 
