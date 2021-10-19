@@ -1,3 +1,3 @@
 # PodcastTechnology
-- DI -> Hilt
+- DI -> Koin
 - Asynchronized Framwork -> Coroutines Flow
