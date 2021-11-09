@@ -61,7 +61,7 @@ class AudioPlayer : LifecycleObserver {
                 player?.currentPosition?.let {
                     playerSubject.onNext(AudioPlayerState.Playing(it))
 
-                    if (it + 10 >= player!!.duration) {
+                    if (it + 200 >= player!!.duration) {
                         playerSubject.onNext(AudioPlayerState.Finished(currentPubData))
                     }
                 }
