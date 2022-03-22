@@ -51,19 +51,19 @@ class EpisodeListActivity : BaseActivity() {
     }
 
     private fun observableLiveData() {
-        viewModel.coverImageUrl.observe(this, {
+        viewModel.coverImageUrl.observe(this) {
             Glide.with(this)
                 .load(it)
                 .placeholder(R.drawable.place_holder_grey)
                 .into(binding.imagePodcastCover)
-        })
+        }
 
-        viewModel.episodes.observe(this, {
+        viewModel.episodes.observe(this) {
             adapter.submitData(lifecycle, it)
-        })
+        }
 
-        viewModel.serverError.observe(this, {
+        viewModel.serverError.observe(this) {
             toast(R.string.server_error)
-        })
+        }
     }
 }

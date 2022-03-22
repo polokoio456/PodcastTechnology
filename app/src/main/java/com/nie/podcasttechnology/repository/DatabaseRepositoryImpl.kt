@@ -37,21 +37,19 @@ class DatabaseRepositoryImpl(
         return Pager(
             config = PagingConfig(pageSize = 20, prefetchDistance = 10),
             pagingSourceFactory = { episodeDao.listenEpisodesByDate() }
-        ).flow.flowOn(Dispatchers.IO)
+        ).flow
             .map { it.map { entity -> entity.toViewEpisode() } }
             .flowOn(Dispatchers.IO)
     }
 
     override fun getNextEpisode(pubDate: Date): Flow<List<ViewEpisode>> {
         return episodeDao.getNextEpisode(pubDate)
-            .flowOn(Dispatchers.IO)
             .map { it.map { entity -> entity.toViewEpisode() } }
             .flowOn(Dispatchers.IO)
     }
 
     override fun getLatestEpisode(): Flow<List<ViewEpisode>> {
         return episodeDao.getLatestEpisode()
-            .flowOn(Dispatchers.IO)
             .map { it.map { entity -> entity.toViewEpisode() } }
             .flowOn(Dispatchers.IO)
     }
