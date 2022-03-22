@@ -161,7 +161,7 @@ class EpisodePlayerActivity : BaseActivity() {
     }
 
     private fun observableLiveData() {
-        viewModel.episode.observe(this, {
+        viewModel.episode.observe(this) {
             if (it.isEmpty()) {
                 viewModel.getLatestEpisode()
                 return@observe
@@ -170,11 +170,11 @@ class EpisodePlayerActivity : BaseActivity() {
             val episode = it.first()
             binding.textTitle.text = episode.title
             audioPlayer.resetPlayer(this, episode.pubDate, episode.audioUrl)
-        })
+        }
 
-        viewModel.latestEpisode.observe(this, {
+        viewModel.latestEpisode.observe(this) {
             audioPlayer.resetPlayer(this, it.pubDate, it.audioUrl, false)
-        })
+        }
     }
 
     private fun setMaxDurationText(maxDuration: Int) {

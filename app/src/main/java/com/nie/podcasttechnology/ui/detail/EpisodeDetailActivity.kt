@@ -14,8 +14,6 @@ import com.nie.podcasttechnology.extension.addTo
 import com.nie.podcasttechnology.extension.throttleClick
 import com.nie.podcasttechnology.ui.audioplay.EpisodePlayerActivity
 import io.reactivex.android.schedulers.AndroidSchedulers
-import io.reactivex.disposables.CompositeDisposable
-import io.reactivex.disposables.Disposable
 
 class EpisodeDetailActivity : BaseActivity() {
 
