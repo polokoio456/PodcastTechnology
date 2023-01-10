@@ -69,7 +69,9 @@ class EpisodeListViewModelTest {
         verifyOrder {
             databaseRepository.clearAllDatabaseTables()
             episodeListRepository.fetchEpisodes()
+
             databaseRepository.insertEpisodes(rss.channel.items)
+
         }
     }
 
