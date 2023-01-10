@@ -36,12 +36,15 @@ jobs:
           name: Test-Reports
           path: app/build/reports
         if: always()
-        
+   
   upload:
     needs: [ build ]
     name: Upload the artifact
     runs-on: ubuntu-latest
     steps:
+      - name: Build Debug APK
+        run: ./gradlew assembleDebug
+        
       - name: Upload Bundle
         uses: actions/upload-artifact@v2
         with:
