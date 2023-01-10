@@ -71,6 +71,7 @@ class EpisodeListViewModelTest {
             episodeListRepository.fetchEpisodes()
 
             databaseRepository.insertEpisodes(rss.channel.items)
+
         }
     }
 
